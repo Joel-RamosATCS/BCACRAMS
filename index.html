@@ -115,6 +115,8 @@ textarea{width:100%;min-height:150px;resize:vertical;background:#0c0c0f;border:1
   border-radius:10px;padding:13px;color:var(--text);
   font:12.5px/1.65 "SF Mono",ui-monospace,Menlo,Consolas,monospace}
 textarea:focus{outline:none;border-color:var(--accent)}
+input.stdin{width:100%;margin-top:4px;background:#0c0c0f;border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;color:var(--text);font:12.5px "SF Mono",ui-monospace,Menlo,Consolas,monospace}
+input.stdin:focus{outline:none;border-color:var(--accent)}
 
 /* concepts */
 .acc{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);margin-bottom:10px}
@@ -322,7 +324,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
 
     <!-- ============ CODING (original problem form) ============ -->
     <section class="section" id="s-coding">
-      <div class="head"><div><h2>Coding Problems</h2><p>Straight from the review sheets — write the program, then compare with the solution.</p></div>
+      <div class="head"><div><h2>Coding Problems</h2><p>Write the program and press <b>Run</b> — it compiles and prints right here. Then compare with the solution.</p></div>
         <div class="pill" id="cdCount">—</div></div>
       <div id="cdHost"></div>
     </section>
@@ -555,37 +557,121 @@ document.getElementById('trPrev').onclick=()=>{ trPos=(trPos-1+tracing.length)%t
 
 function sh(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
 
-/* ---------------- CODING PROBLEMS (original problem form) ---------------- */
+/* ---------- CODING PROBLEMS (original form) + real Java runner ---------- */
 const coding = [
- {t:"Review1 — Sum & average until 0",
+ {t:"Review1 - Sum & average until 0",
   p:"Write a program that reads a list of numbers from the user and then prints the sum and the average. The list ends when the user enters a 0.",
+  ex:"Input: 4 10 6 0   ->   Sum: 20 / Average: 6.666666666666667",
+  in:"4 10 6 0",
   start:"import java.util.Scanner;\n\npublic class Review1 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
   s:"import java.util.Scanner;\n\npublic class Review1 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int sum = 0, count = 0;\n    int n = input.nextInt();\n    while (n != 0) {\n      sum += n;\n      count++;\n      n = input.nextInt();\n    }\n    if (count > 0) {\n      double avg = (double) sum / count;\n      System.out.println(\"Sum: \" + sum);\n      System.out.println(\"Average: \" + avg);\n    } else {\n      System.out.println(\"No numbers entered.\");\n    }\n  }\n}"},
- {t:"Review2 — A / B / C classifier",
-  p:"Ask the user to enter an integer. If it is less than 100 and a multiple of 5, print A. Otherwise, if it is less than 100 or a multiple of 5, print B. Otherwise, print C. Exactly one output prints.",
+ {t:"Review2 - A / B / C classifier",
+  p:"Ask the user to enter an integer. If it is less than 100 and a multiple of 5, print A. Otherwise, if it is less than 100 or a multiple of 5, print B. Otherwise print C. Exactly one output prints.",
   ex:"65 -> A    47 -> B    120 -> B    143 -> C",
+  in:"65",
   start:"import java.util.Scanner;\n\npublic class Review2 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
   s:"import java.util.Scanner;\n\npublic class Review2 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    if (n < 100 && n % 5 == 0) {\n      System.out.println(\"A\");\n    } else if (n < 100 || n % 5 == 0) {\n      System.out.println(\"B\");\n    } else {\n      System.out.println(\"C\");\n    }\n  }\n}"},
- {t:"Review3 — Countdown grid 99 to 80",
+ {t:"Review3 - Countdown grid 99 to 80",
   p:"Write a program that produces the output below, using a while loop that decreases by one each time through the loop.",
   ex:"99 98 97 96 95\n94 93 92 91 90\n89 88 87 86 85\n84 83 82 81 80",
+  in:"",
   start:"public class Review3 {\n  public static void main(String[] args) {\n\n  }\n}",
   s:"public class Review3 {\n  public static void main(String[] args) {\n    int n = 99;\n    while (n >= 80) {\n      System.out.print(n + \" \");\n      if (n % 5 == 0) System.out.println();\n      n--;\n    }\n  }\n}"},
  {t:"Even / odd from 4 to 19",
   p:"Write a while loop that prints the output below. The words \"odd\" and \"even\" must come from an if statement inside the loop.",
   ex:"4: even\n7: odd\n10: even\n13: odd\n16: even\n19: odd",
+  in:"",
   start:"public class EvenOdd {\n  public static void main(String[] args) {\n\n  }\n}",
   s:"public class EvenOdd {\n  public static void main(String[] args) {\n    int i = 4;\n    while (i <= 19) {\n      if (i % 2 == 0) System.out.println(i + \": even\");\n      else            System.out.println(i + \": odd\");\n      i += 3;\n    }\n  }\n}"},
  {t:"Flip a coin 100 times",
-  p:"Simulate flipping a coin 100 times. Count the number of times the coin lands on heads and print that number after the simulation is complete.",
+  p:"Simulate flipping a coin 100 times. Count how many times it lands on heads and print that number after the simulation.",
+  ex:"(output varies - it's random)",
+  in:"",
   start:"public class Coin {\n  public static void main(String[] args) {\n\n  }\n}",
   s:"public class Coin {\n  public static void main(String[] args) {\n    int heads = 0, flips = 0;\n    while (flips < 100) {\n      if (Math.random() < 0.5) heads++;\n      flips++;\n    }\n    System.out.println(\"Heads: \" + heads);\n  }\n}"},
  {t:"Positives vs negatives",
   p:"Read a list of numbers. Count the negatives and the positives (ignore 0s). Stop once the number of negatives exceeds the number of positives, then print both counts.",
-  ex:"Input:  6 70 -2 -4 13 0 16 -1 19 -56 -19 -2 14 5\nOutput: 5 positives\n        6 negatives",
+  ex:"Input:  6 70 -2 -4 13 0 16 -1 19 -56 -19 -2 14 5\nOutput: 5 positives / 6 negatives",
+  in:"6 70 -2 -4 13 0 16 -1 19 -56 -19 -2 14 5",
   start:"import java.util.Scanner;\n\npublic class Counts {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
-  s:"import java.util.Scanner;\n\npublic class Counts {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int pos = 0, neg = 0;\n    int n = input.nextInt();\n    while (neg <= pos) {\n      if (n > 0)      pos++;\n      else if (n < 0) neg++;\n      n = input.nextInt();\n    }\n    System.out.println(pos + \" positives\");\n    System.out.println(neg + \" negatives\");\n  }\n}"}
+  s:"import java.util.Scanner;\n\npublic class Counts {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int pos = 0, neg = 0;\n    int n = input.nextInt();\n    while (neg <= pos) {\n      if (n > 0)      pos++;\n      else if (n < 0) neg++;\n      n = input.nextInt();\n    }\n    System.out.println(pos + \" positives\");\n    System.out.println(neg + \" negatives\");\n  }\n}"},
+
+/* ---- more, in the same spirit ---- */
+ {t:"Sum 1 to N",
+  p:"Read an integer N. Use a while loop to add 1 + 2 + ... + N and print the sum.",
+  ex:"Input: 10   ->   Sum = 55",
+  in:"10",
+  start:"import java.util.Scanner;\n\npublic class SumToN {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class SumToN {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    int sum = 0, i = 1;\n    while (i <= n) {\n      sum += i;\n      i++;\n    }\n    System.out.println(\"Sum = \" + sum);\n  }\n}"},
+ {t:"Largest of a list (until 0)",
+  p:"Read numbers until the user enters 0. Print the largest number seen (don't count the 0).",
+  ex:"Input: 3 9 2 12 5 0   ->   Largest = 12",
+  in:"3 9 2 12 5 0",
+  start:"import java.util.Scanner;\n\npublic class Largest {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class Largest {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    int max = n;\n    while (n != 0) {\n      if (n > max) max = n;\n      n = input.nextInt();\n    }\n    System.out.println(\"Largest = \" + max);\n  }\n}"},
+ {t:"Multiplication table",
+  p:"Read an integer n and print its times table from 1 to 10, one line each, in the form  n x i = n*i.",
+  ex:"Input: 7\n7 x 1 = 7\n7 x 2 = 14\n...\n7 x 10 = 70",
+  in:"7",
+  start:"import java.util.Scanner;\n\npublic class TimesTable {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class TimesTable {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    int i = 1;\n    while (i <= 10) {\n      System.out.println(n + \" x \" + i + \" = \" + (n * i));\n      i++;\n    }\n  }\n}"},
+ {t:"Sum of the digits",
+  p:"Read a positive integer and print the sum of its digits using % and / in a while loop.",
+  ex:"Input: 4702   ->   Digit sum = 13",
+  in:"4702",
+  start:"import java.util.Scanner;\n\npublic class DigitSum {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class DigitSum {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    int sum = 0;\n    while (n > 0) {\n      sum += n % 10;\n      n /= 10;\n    }\n    System.out.println(\"Digit sum = \" + sum);\n  }\n}"},
+ {t:"FizzBuzz 1 to 30",
+  p:"Print the numbers 1 to 30. For multiples of 3 print \"Fizz\", for multiples of 5 print \"Buzz\", and for multiples of both print \"FizzBuzz\".",
+  ex:"1\n2\nFizz\n4\nBuzz\nFizz\n...",
+  in:"",
+  start:"public class FizzBuzz {\n  public static void main(String[] args) {\n\n  }\n}",
+  s:"public class FizzBuzz {\n  public static void main(String[] args) {\n    int i = 1;\n    while (i <= 30) {\n      if (i % 3 == 0 && i % 5 == 0) System.out.println(\"FizzBuzz\");\n      else if (i % 3 == 0) System.out.println(\"Fizz\");\n      else if (i % 5 == 0) System.out.println(\"Buzz\");\n      else System.out.println(i);\n      i++;\n    }\n  }\n}"},
+ {t:"Count evens until 0",
+  p:"Read numbers until 0 is entered. Count and print how many of them were even (don't count the 0).",
+  ex:"Input: 4 7 10 15 22 0   ->   Evens = 3",
+  in:"4 7 10 15 22 0",
+  start:"import java.util.Scanner;\n\npublic class CountEvens {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class CountEvens {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    int count = 0;\n    while (n != 0) {\n      if (n % 2 == 0) count++;\n      n = input.nextInt();\n    }\n    System.out.println(\"Evens = \" + count);\n  }\n}"},
+ {t:"Star triangle",
+  p:"Read a height and print a right triangle of stars using nested while loops (row 1 has one star, row 2 has two, and so on).",
+  ex:"Input: 4\n*\n**\n***\n****",
+  in:"4",
+  start:"import java.util.Scanner;\n\npublic class Triangle {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class Triangle {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int h = input.nextInt();\n    int row = 1;\n    while (row <= h) {\n      int col = 1;\n      while (col <= row) { System.out.print(\"*\"); col++; }\n      System.out.println();\n      row++;\n    }\n  }\n}"}
 ];
+
+// Judge0 needs the file name to match a public class; make the top-level class
+// non-public and add the Scanner import if the student forgot it.
+function prepJava(src){
+  let s = src;
+  if (/Scanner/.test(s) && !/import\s+java\.util\.Scanner/.test(s)) s = "import java.util.Scanner;\n" + s;
+  s = s.replace(/(public\s+)?class\s+\w+/, "class Main");   // Judge0 runs the class named Main
+  return s;
+}
+async function runCode(idx){
+  const code = document.getElementById('code'+idx).value;
+  const stdin = document.getElementById('in'+idx).value;
+  const out = document.getElementById('out'+idx);
+  out.style.display='block'; out.textContent='Running on the Java sandbox…';
+  const enc = x => btoa(unescape(encodeURIComponent(x)));
+  try{
+    const r = await fetch('https://ce.judge0.com/submissions?base64_encoded=true&wait=true',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ source_code: enc(prepJava(code)), language_id: 62, stdin: enc(stdin) })
+    });
+    if(r.status===429){ out.textContent='The public Java sandbox is rate-limited right now — wait ~30s and press Run again.'; return; }
+    const d = await r.json();
+    const dec = x => { try { return (typeof x==='string' && x) ? atob(x) : ''; } catch(e){ return x||''; } };
+    let res = dec(d.compile_output) || dec(d.stdout);
+    const se = dec(d.stderr);
+    if(se) res = (res ? res + '\n' : '') + '[stderr] ' + se;
+    if(!res) res = (d.status && d.status.description ? d.status.description : '(no output)') + (d.message ? ' ' + d.message : '');
+    out.textContent = res;
+  }catch(e){
+    out.textContent = 'Could not reach the Java sandbox (needs internet): ' + e;
+  }
+}
 state.codeText = state.codeText || {};
 const cdHost = document.getElementById('cdHost');
 coding.forEach((c,idx)=>{
@@ -596,12 +682,19 @@ coding.forEach((c,idx)=>{
     (c.ex?'<div class="small faint" style="margin-bottom:10px;white-space:pre-wrap">'+c.ex+'</div>':'')+
     '<label class="small muted">Your code</label>'+
     '<textarea id="code'+idx+'" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>'+
-    '<div class="row" style="margin-top:10px"><button class="btn sm" data-t="s'+idx+'">Show solution</button>'+
-    '<button class="btn sm ok" data-t="m'+idx+'">Mark done</button></div>'+
+    '<label class="small muted" style="display:block;margin-top:8px">Program input (stdin, if any)</label>'+
+    '<input id="in'+idx+'" class="stdin" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="nothing needed, or e.g.  10  /  3 9 2 12 5 0">'+
+    '<div class="row" style="margin-top:10px">'+
+      '<button class="btn sm primary" data-t="r'+idx+'">▶ Run</button>'+
+      '<button class="btn sm" data-t="s'+idx+'">Show solution</button>'+
+      '<button class="btn sm ok" data-t="m'+idx+'">Mark done</button></div>'+
+    '<pre id="out'+idx+'" style="display:none;margin-top:12px"></pre>'+
     '<pre id="s'+idx+'" style="display:none;margin-top:12px"></pre>';
   const ta=d.querySelector('#code'+idx);
   ta.value = (state.codeText[idx]!==undefined) ? state.codeText[idx] : c.start;
   ta.addEventListener('input',()=>{ state.codeText[idx]=ta.value; save(); });
+  d.querySelector('#in'+idx).value = c.in || '';
+  d.querySelector('[data-t="r'+idx+'"]').onclick=()=>runCode(idx);
   d.querySelector('[data-t="s'+idx+'"]').onclick=()=>{ const p=d.querySelector('#s'+idx); p.textContent=c.s; p.style.display=(p.style.display==='none'?'block':'none'); };
   d.querySelector('[data-t="m'+idx+'"]').onclick=()=>{ state.coding[idx]='done'; save(); document.getElementById('cdm'+idx).textContent='✓ done'; upd(); toast('Marked done'); };
   cdHost.appendChild(d);
