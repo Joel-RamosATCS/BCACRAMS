@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08080a">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AP CSA · Unit 1 Cram</title>
+<style>
+:root{
+  --bg:#08080a; --surface:#121214; --surface-2:#17171a; --elev:#1c1c20;
+  --line:#232327; --line-2:#33333a;
+  --text:#f4f4f5; --muted:#a1a1aa; --faint:#6f6f78;
+  --accent:#6d7cff; --accent-soft:rgba(109,124,255,.14); --accent-line:rgba(109,124,255,.32);
+  --green:#3fb950; --green-soft:rgba(63,185,80,.14);
+  --red:#f85149; --red-soft:rgba(248,81,73,.14);
+  --amber:#d6a02a; --amber-soft:rgba(214,160,42,.14);
+  --radius:14px; --shadow:0 1px 0 rgba(255,255,255,.02), 0 14px 34px -18px rgba(0,0,0,.75);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Segoe UI",Roboto,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; letter-spacing:-.006em;
+}
+a{color:var(--accent); text-decoration:none}
+::selection{background:rgba(109,124,255,.3)}
+.app{display:grid; grid-template-columns:238px 1fr; min-height:100vh}
+
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:0;height:100vh;background:#0b0b0d;border-right:1px solid var(--line);
+  padding:16px 14px;display:flex;flex-direction:column;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px}
+.logo{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+  background:linear-gradient(160deg,#26262e,#141418);border:1px solid var(--line-2);
+  color:#e9e9ee;font-weight:700;font-size:12.5px;letter-spacing:.02em}
+.brand h1{font-size:13.5px;margin:0;font-weight:600}
+.brand p{margin:1px 0 0;font-size:11px;color:var(--faint)}
+.navlabel{font-size:10.5px;text-transform:uppercase;letter-spacing:.11em;color:var(--faint);padding:12px 10px 7px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{position:relative;display:flex;align-items:center;gap:10px;width:100%;text-align:left;cursor:pointer;
+  padding:8px 10px;border-radius:9px;border:1px solid transparent;background:transparent;color:var(--muted);
+  font:500 13.5px inherit;transition:background .14s,color .14s,border-color .14s}
+.nav button .ic{display:grid;place-items:center;width:16px;height:16px;color:currentColor;opacity:.85;flex:0 0 auto}
+.nav button .ic svg{display:block}
+.nav button:hover{background:#17171a;color:var(--text)}
+.nav button.active{background:#18181c;color:var(--text);border-color:var(--line)}
+.nav button.active::before{content:"";position:absolute;left:-15px;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+.nav .badge{margin-left:auto;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+.nav button.active .badge{color:var(--muted)}
+.sidefoot{margin-top:auto;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.sidefoot .t{font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.11em}
+.sidefoot .big{font-size:20px;font-weight:650;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.sidefoot .s{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+/* ---------- main ---------- */
+main{padding:34px 38px 90px;max-width:1120px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.head h2{font-size:22px;font-weight:650;letter-spacing:-.02em;margin:0}
+.head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.section{display:none}
+.section.active{display:block;animation:rise .26s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{position:static;height:auto}
+  .g2,.g3,.g4{grid-template-columns:1fr}main{padding:22px}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 6px;font-size:14.5px;font-weight:600}
+.muted{color:var(--muted)} .faint{color:var(--faint)} .small{font-size:12.5px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.center{text-align:center}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+
+.stat .l{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--faint)}
+.stat .n{font-size:28px;font-weight:650;letter-spacing:-.025em;margin-top:5px;font-variant-numeric:tabular-nums}
+.barbg{height:6px;border-radius:999px;background:#1c1c20;overflow:hidden;margin-top:12px}
+.bar{height:100%;background:var(--accent);width:0;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;font-size:12.5px;
+  font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.timer{font-variant-numeric:tabular-nums;font-weight:650;font-size:18px;color:var(--text)}
+.kbd{font:600 11px ui-monospace;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:6px;padding:1px 6px;color:var(--muted)}
+.badge2{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+/* buttons */
+.btn{cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:9px;
+  border:1px solid var(--line-2);background:var(--elev);color:var(--text);font:550 13px inherit;
+  transition:background .14s,border-color .14s,transform .06s}
+.btn:hover{background:#232329;border-color:#3f3f47}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);border-color:transparent;color:#0a0a14}
+.btn.primary:hover{background:#7f8cff}
+.btn.ok{background:var(--green);border-color:transparent;color:#06210f}
+.btn.warn{background:var(--red);border-color:transparent;color:#240a08}
+.btn.ghost{background:transparent;border-color:var(--line)}
+.btn.ghost:hover{background:#17171a}
+.btn.sm{padding:6px 10px;font-size:12px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* code */
+pre{background:#0c0c0f;border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto;
+  font:12.5px/1.65 "SF Mono",ui-monospace,Menlo,Consolas,monospace;color:#d7d7dd}
+code.inl{background:#17171b;border:1px solid var(--line);border-radius:6px;padding:1px 6px;
+  font:12px "SF Mono",ui-monospace,Menlo,monospace;color:#c9c9d2}
+textarea{width:100%;min-height:150px;resize:vertical;background:#0c0c0f;border:1px solid var(--line-2);
+  border-radius:10px;padding:13px;color:var(--text);
+  font:12.5px/1.65 "SF Mono",ui-monospace,Menlo,Consolas,monospace}
+textarea:focus{outline:none;border-color:var(--accent)}
+
+/* concepts */
+.acc{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);margin-bottom:10px}
+.acc>button{width:100%;text-align:left;background:transparent;border:0;color:var(--text);padding:14px 16px;
+  font:550 14px inherit;display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;transition:background .14s}
+.acc>button:hover{background:#17171a}
+.acc .body{display:none;padding:2px 16px 16px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+.acc.open .body{display:block}
+.acc .body code{color:#cdd2ff}
+.chev{transition:.2s;color:var(--faint)} .acc.open .chev{transform:rotate(90deg)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
+
+/* flashcards */
+.fcWrap{max-width:680px;margin:0 auto}
+.fc{height:270px;perspective:1400px;cursor:pointer}
+.fc .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.fc.flip .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:grid;place-items:center;padding:28px;text-align:center;box-shadow:var(--shadow);background:var(--surface)}
+.back{background:var(--surface-2);transform:rotateY(180deg)}
+.face .tag{position:absolute;top:14px;left:16px;font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.11em}
+.face .q{font-size:21px;font-weight:600;line-height:1.35}
+.face .a{font-size:16px;line-height:1.5;color:#cdd0ff}
+.face .hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:var(--faint)}
+
+/* questions */
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;
+  background:var(--accent-soft);color:#b3bbff;border:1px solid var(--accent-line)}
+.chip.alt{background:var(--amber-soft);color:#e8c877;border-color:rgba(214,160,42,.3)}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:10px;
+  background:#101013;cursor:pointer;margin-bottom:8px;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--line-2);background:#151519}
+.opt .k{width:24px;height:24px;flex:0 0 auto;border-radius:7px;display:grid;place-items:center;font-weight:600;font-size:12px;
+  background:#1a1a1f;border:1px solid var(--line-2);color:var(--muted)}
+.opt.correct{border-color:rgba(63,185,80,.5);background:var(--green-soft)}
+.opt.correct .k{background:var(--green);color:#04210f;border-color:transparent}
+.opt.wrong{border-color:rgba(248,81,73,.5);background:var(--red-soft)}
+.opt.wrong .k{background:var(--red);color:#240a08;border-color:transparent}
+.opt.disabled{pointer-events:none}
+.fb{padding:12px 14px;border-radius:10px;margin-top:12px;font-size:13px;display:none;border:1px solid var(--line);background:#101013}
+.fb.show{display:block}
+.fb.good{border-color:rgba(63,185,80,.45);background:var(--green-soft)}
+.fb.bad{border-color:rgba(248,81,73,.45);background:var(--red-soft)}
+.fb.near{border-color:rgba(214,160,42,.45);background:var(--amber-soft)}
+
+/* progress dots */
+.prog{display:flex;gap:5px;flex-wrap:wrap;margin-top:14px}
+.pdot{width:20px;height:5px;border-radius:999px;background:#1e1e23}
+.pdot.done{background:var(--green)}
+.pdot.cur{background:var(--accent)}
+
+/* hero + ring */
+.hero{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ring{--p:0;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--accent) calc(var(--p)*1%), #1c1c20 0);position:relative}
+.ring::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--surface)}
+.ring span{position:relative;font-weight:650;font-size:16px;font-variant-numeric:tabular-nums}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(16px);opacity:0;pointer-events:none;
+  background:#1a1a1f;border:1px solid var(--line-2);color:var(--text);padding:10px 15px;border-radius:10px;
+  box-shadow:var(--shadow);font-size:13px;transition:.22s;z-index:200}
+.toast.show{opacity:1;transform:translateX(-50%)}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">CS</div>
+      <div><h1>AP CSA · Unit 1</h1><p>Input · Conditions · Loops</p></div>
+    </div>
+    <div class="navlabel">Study</div>
+    <nav class="nav" id="nav">
+      <button data-t="dash" class="active"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></svg></span>Dashboard</button>
+      <button data-t="concepts"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7.5L19 7.5V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9.5 13h6M9.5 16.5h6"/></svg></span>Cheat Sheet</button>
+      <button data-t="flash"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="13" height="13" rx="2"/><path d="M7.5 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/></svg></span>Flashcards<span class="badge" id="b-flash"></span></button>
+      <button data-t="trace"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.2"/><path d="M7.5 9.5l3 2.8-3 2.8"/><path d="M13 15h4"/></svg></span>Tracing Drills<span class="badge" id="b-trace"></span></button>
+      <button data-t="quiz"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.5 2.4 5-5.4"/></svg></span>Quiz<span class="badge" id="b-quiz"></span></button>
+      <button data-t="coding"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l-5 5 5 5"/><path d="M15 7l5 5-5 5"/></svg></span>Coding Tasks</button>
+      <button data-t="exam"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></span>Exam Mode</button>
+    </nav>
+    <div class="sidefoot">
+      <div class="t">Test in</div>
+      <div class="big" id="count">—</div>
+      <div class="s" id="countsub">loading…</div>
+    </div>
+    <div style="margin-top:12px"><button class="btn ghost sm" id="resetAll">Reset progress</button></div>
+  </aside>
+
+
+  <main>
+    <!-- ============ DASHBOARD ============ -->
+    <section class="section active" id="s-dash">
+      <div class="head">
+        <div><h2>Dashboard</h2><p>Unit 1 cram — randomness, conditions, integer math &amp; while loops.</p></div>
+        <div class="pill"><span class="dot"></span><span id="todayline">Let's get it</span></div>
+      </div>
+      <div class="grid g3">
+        <div class="card stat"><div class="l">Overall mastery</div><div class="n" id="m-overall">0%</div>
+          <div class="barbg"><div class="bar" id="bar-overall"></div></div></div>
+        <div class="card stat"><div class="l">Items done</div><div class="n" id="m-done">0</div>
+          <div class="small muted" id="m-total">of 0 items</div></div>
+        <div class="card stat"><div class="l">Quiz accuracy</div><div class="n" id="m-acc">—</div>
+          <div class="small muted">answered correctly</div></div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="hero">
+          <div class="ring" id="ring1"><span id="ring1v">0%</span></div>
+          <div style="flex:1;min-width:220px">
+            <h3>Today's plan</h3>
+            <div class="grid g4 small" style="margin-top:8px">
+              <div><b id="p-flash">0%</b><div class="faint">Flashcards</div></div>
+              <div><b id="p-trace">0%</b><div class="faint">Tracing</div></div>
+              <div><b id="p-quiz">0%</b><div class="faint">Quiz</div></div>
+              <div><b id="p-coding">0%</b><div class="faint">Coding</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:16px">
+          <button class="btn primary" data-go="trace">Start tracing drills →</button>
+          <button class="btn" data-go="quiz">Take the quiz</button>
+          <button class="btn" data-go="exam">⚑ Exam mode</button>
+        </div>
+      </div>
+
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card">
+          <h3>Biggest wins (the 2-minute fixes)</h3>
+          <ul class="small muted" style="margin:8px 0 0;padding-left:18px;line-height:1.9">
+            <li><b style="color:#cfe0ff">int / int truncates</b> — <code class="inl">7/2 == 3</code>, <code class="inl">2/5 == 0</code></li>
+            <li><b style="color:#cfe0ff">Modulo</b> — remainder, sign follows the dividend: <code class="inl">-7 % 2 == -1</code></li>
+            <li><b style="color:#cfe0ff">Random int [lo, hi)</b> — <code class="inl">(int)(Math.random()*(hi-lo)) + lo</code></li>
+            <li><b style="color:#cfe0ff">while</b> checks first — can run <b>0</b> times; trace a value table</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>How to use this (15 min loop)</h3>
+          <ol class="small muted" style="margin:8px 0 0;padding-left:18px;line-height:1.9">
+            <li>Read the <b>Cheat Sheet</b> once.</li>
+            <li>Run <b>Tracing Drills</b> until you hit 100% (auto-graded).</li>
+            <li>Do the <b>Quiz</b>; read every explanation.</li>
+            <li>Redo <b>Coding Tasks</b> from a blank file.</li>
+            <li>Finish with <b>Exam Mode</b> under the clock.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CHEAT SHEET ============ -->
+    <section class="section" id="s-concepts">
+      <div class="head"><div><h2>Cheat Sheet</h2><p>Everything Unit 1 actually tests. Click to expand.</p></div></div>
+      <div id="accs"></div>
+    </section>
+
+    <!-- ============ FLASHCARDS ============ -->
+    <section class="section" id="s-flash">
+      <div class="head"><div><h2>Flashcards</h2><p>Click the card to flip. Mark what you knew.</p></div>
+        <div class="pill" id="fcCount">—</div></div>
+      <div class="fcWrap">
+        <div class="fc" id="fcCard"><div class="inner">
+          <div class="face front"><div class="tag">Question</div><div class="q" id="fcQ">…</div><div class="hint">click / Space to flip</div></div>
+          <div class="face back"><div class="tag">Answer</div><div class="a" id="fcA">…</div><div class="hint">click to flip back</div></div>
+        </div></div>
+        <div class="row center" style="justify-content:center;margin-top:20px">
+          <button class="btn warn" id="fcAgain">Again</button>
+          <button class="btn ghost" id="fcFlip">Flip</button>
+          <button class="btn ok" id="fcKnow">Got it</button>
+        </div>
+        <div class="prog" id="fcProg"></div>
+      </div>
+    </section>
+
+    <!-- ============ TRACING ============ -->
+    <section class="section" id="s-trace">
+      <div class="head"><div><h2>Tracing Drills</h2><p>Type the exact output. Auto-graded (spacing/newlines flexible).</p></div>
+        <div class="pill" id="trCount">—</div></div>
+      <div class="qcard">
+        <div class="qtop"><div><span class="chip" id="trNo">1</span> <span class="small muted" id="trTitle"></span></div>
+          <div class="small faint" id="trProg"></div></div>
+        <div class="split">
+          <div>
+            <pre id="trCode"></pre>
+            <div id="trInputWrap" style="margin-top:10px"></div>
+          </div>
+          <div>
+            <label class="small muted">Your output</label>
+            <textarea id="trAnswer" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Type what the program prints…"></textarea>
+            <div class="row" style="margin-top:10px">
+              <button class="btn primary" id="trCheck">Check</button>
+              <button class="btn" id="trReveal">Reveal</button>
+              <button class="btn ghost" id="trClear">Clear</button>
+            </div>
+            <div class="fb" id="trFb"></div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:14px">
+          <button class="btn sm" id="trPrev">← Prev</button>
+          <button class="btn sm" id="trNext">Next →</button>
+          <span class="small faint" style="margin-left:auto">Tip: keep a column of each variable per iteration.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section class="section" id="s-quiz">
+      <div class="head"><div><h2>Quiz</h2><p>Pick the best answer — feedback is instant.</p></div>
+        <div class="pill" id="qzScore">—</div></div>
+      <div id="qzHost"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn" id="qzShuffle">↻ Shuffle &amp; restart</button>
+      </div>
+    </section>
+
+    <!-- ============ CODING ============ -->
+    <section class="section" id="s-coding">
+      <div class="head"><div><h2>Coding Tasks</h2><p>Write each from a blank file — that's the real test skill.</p></div>
+        <div class="pill" id="cdCount">—</div></div>
+      <div id="cdHost"></div>
+    </section>
+
+    <!-- ============ EXAM ============ -->
+    <section class="section" id="s-exam">
+      <div class="head"><div><h2>Exam Mode</h2><p>12 questions · 15:00 · no hints. Mimics test pressure.</p></div>
+        <div class="pill"><span class="timer" id="exTimer">15:00</span></div></div>
+      <div id="exIntro" class="card">
+        <h3>Ready?</h3>
+        <p class="muted small">Random mix of concept + output questions. You'll get a score and a review at the end.</p>
+        <button class="btn primary" id="exStart">Start the clock</button>
+      </div>
+      <div id="exBody" style="display:none">
+        <div class="qcard">
+          <div class="qtop"><div><span class="chip alt" id="exNo">Q1</span></div><div class="small faint" id="exProg"></div></div>
+          <div id="exQ"></div>
+          <div id="exOpts"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="exNext">Next →</button>
+            <button class="btn ghost" id="exQuit">End early</button></div>
+        </div>
+      </div>
+      <div id="exResult" style="display:none"></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   AP CSA Unit 1 Cram — single-file study tool
+   Data derived from Day09/Day10 test reviews (answers verified).
+   ============================================================ */
+const LS = "apcsa-unit1-cram-v1";
+const state = Object.assign({flash:{}, trace:{}, quiz:{}, coding:{}, quizSeen:0, quizRight:0, examBest:null}, JSON.parse(localStorage.getItem(LS)||"{}"));
+function save(){ localStorage.setItem(LS, JSON.stringify(state)); }
+
+/* ---------------- CHEAT SHEET ---------------- */
+const concepts = [
+ {t:"Integer division truncates toward zero", b:
+  "<code>7 / 2</code> → <b>3</b> · <code>2 / 5</code> → <b>0</b> · <code>-7 / 2</code> → <b>-3</b><br>"+
+  "If <b>either</b> operand is a <code>double</code>, you get a double: <code>15 / 4.0</code> → <b>3.75</b>. "+
+  "Storing a double in an <code>int</code> won't compile without a cast, and casting truncates: <code>(int)3.9</code> → <b>3</b>."},
+ {t:"Modulo (%) returns the remainder", b:
+  "The result's sign follows the <b>dividend</b> (left side): <code>9 % 2</code> → <b>1</b>, <code>4 % 9</code> → <b>4</b>, "+
+  "<code>20 % 7</code> → <b>6</b>, <code>-7 % 2</code> → <b>-1</b>.<br>"+
+  "Handy checks: <b>even</b> = <code>n % 2 == 0</code>; a number is a <b>multiple of 5</b> when <code>n % 5 == 0</code>."},
+ {t:"Math.random() and random integers", b:
+  "<code>Math.random()</code> returns a <code>double</code> in <b>[0.0, 1.0)</b> — never 1, never negative.<br>"+
+  "Random int in <b>[lo, hi)</b> (lo inclusive, hi exclusive):<br>"+
+  "<code>(int)(Math.random() * (hi - lo)) + lo</code><br>"+
+  "Examples: <code>[0,46)</code> → <code>(int)(Math.random()*46)</code>; "+
+  "<code>[-17,-5)</code> → <code>(int)(Math.random()*12) - 17</code>; "+
+  "<code>[1,7]</code> (dice) → <code>(int)(Math.random()*6) + 1</code>."},
+ {t:"Boolean operators &amp; precedence", b:
+  "<code>&amp;&amp;</code> = both true · <code>||</code> = at least one true · <code>!</code> = not.<br>"+
+  "<code>!</code> binds tightest, then <code>&amp;&amp;</code>, then <code>||</code>. Use parentheses to be safe.<br>"+
+  "Short-circuit: <code>&amp;&amp;</code> stops at the first false; <code>||</code> stops at the first true."},
+ {t:"if / else if / else", b:
+  "At most <b>one</b> branch of a chain runs — the first whose condition is true.<br>"+
+  "Separate <code>if</code> statements are independent; each is checked on its own (this is why a program can print "+
+  "several letters in one pass)."},
+ {t:"While loop mechanics &amp; tracing", b:
+  "Condition is checked <b>before</b> each iteration, so a <code>while</code> can run <b>zero</b> times.<br>"+
+  "Trace like a machine: make a column per variable and a row per iteration. To avoid messy traces, print a "+
+  "<b>table</b> of values each pass. Watch for updates that change the condition (<code>i++</code>, <code>n = input.nextInt()</code>)."},
+ {t:"print vs println &amp; concatenation", b:
+  "<code>print</code> leaves the cursor on the same line; <code>println</code> adds a newline.<br>"+
+  "In <code>\"n=\" + 4 + 3</code> → <b>n=43</b> (left-to-right text), but <code>4 + 3 + \"x\"</code> → <b>7x</b>."},
+ {t:"Scanner input", b:
+  "<code>nextInt()</code> reads the next integer token (skips whitespace). <code>nextLine()</code> reads the rest of the "+
+  "current line. Mixing them can leave an empty line — read a line to clear it if needed.<br>"+
+  "Typical loop: read once before the loop, re-read at the end of the body."}
+];
+const accs = document.getElementById('accs');
+concepts.forEach(c=>{
+  const d=document.createElement('div'); d.className='acc';
+  d.innerHTML = '<button><span>'+c.t+'</span><span class="chev">▸</span></button><div class="body">'+c.b+'</div>';
+  d.querySelector('button').onclick=()=>d.classList.toggle('open');
+  accs.appendChild(d);
+});
+
+/* ---------------- FLASHCARDS ---------------- */
+const flashcards = [
+ {q:"What does <code>7 / 2</code> evaluate to in Java (both ints)?", a:"3 — integer division truncates. <code>2 / 5</code> → 0."},
+ {q:"<code>-7 / 2</code> and <code>-7 % 2</code>?", a:"-7/2 = <b>-3</b> (truncates toward zero); -7%2 = <b>-1</b> (sign follows the dividend)."},
+ {q:"When does <code>a / b</code> produce a double?", a:"When at least one operand is a double — e.g. <code>15 / 4.0</code> → 3.75."},
+ {q:"Formula: random integer in [lo, hi)?", a:"<code>(int)(Math.random() * (hi - lo)) + lo</code>"},
+ {q:"Range of <code>Math.random()</code>?", a:"[0.0, 1.0) — includes 0, excludes 1, never negative."},
+ {q:"Random die roll 1–6?", a:"<code>(int)(Math.random() * 6) + 1</code>"},
+ {q:"How many branches of an <code>if / else if / else</code> chain run?", a:"At most one — the first true condition."},
+ {q:"Can a <code>while</code> loop run zero times?", a:"Yes — the condition is tested before the first iteration."},
+ {q:"Difference between <code>print</code> and <code>println</code>?", a:"<code>println</code> adds a newline; <code>print</code> does not."},
+ {q:"<code>\"n=\" + 4 + 3</code> vs <code>4 + 3 + \"x\"</code>?", a:"<b>n=43</b> vs <b>7x</b> — left-to-right; the first string flips later numbers to text."},
+ {q:"<code>&amp;&amp;</code> vs <code>||</code>?", a:"&amp;&amp; needs both true; || needs at least one true."},
+ {q:"<code>20 % 7</code> and <code>4 % 9</code>?", a:"6 and 4."},
+ {q:"Best first move when tracing a loop?", a:"Make a table: one column per variable, one row per iteration."},
+ {q:"What reads an integer token from the keyboard?", a:"<code>scanner.nextInt()</code> (Scanner uses nextLine() for whole lines)."},
+ {q:"Expression for random int in [-4, 3)?", a:"size 7 → <code>(int)(Math.random()*7) - 4</code>"},
+ {q:"What do <code>++</code> and <code>--</code> do?", a:"Add or subtract 1. <code>x++</code> is <code>x = x + 1</code>."},
+ {q:"<code>x += 5;</code> is shorthand for?", a:"<code>x = x + 5;</code> — also -=, *=, /=, %=."},
+ {q:"How do nested loops run?", a:"The inner loop finishes completely for each single pass of the outer loop."},
+ {q:"What causes an infinite loop?", a:"A condition that never becomes false — e.g., forgetting to update the counter."},
+ {q:"<code>10 / 3.0</code> vs <code>10 / 3</code>?", a:"3.333… vs 3 — a double operand forces real division."},
+ {q:"Which loop tests its condition first?", a:"<code>while</code> — so it can run zero times."}
+];
+let fcOrder = flashcards.map((_,i)=>i), fcPos=0;
+const fcCard=document.getElementById('fcCard'), fcQ=document.getElementById('fcQ'), fcA=document.getElementById('fcA');
+function fcRender(){ const i=fcOrder[fcPos]; fcQ.innerHTML=flashcards[i].q; fcA.innerHTML=flashcards[i].a;
+  fcCard.classList.remove('flip'); document.getElementById('fcCount').textContent=(fcPos+1)+" / "+flashcards.length;
+  renderDots(document.getElementById('fcProg'), flashcards.length, p=>state.flash[fcOrder[p]]); }
+function fcNext(){ fcPos=(fcPos+1)%flashcards.length; fcRender(); }
+fcCard.onclick=()=>fcCard.classList.toggle('flip');
+document.getElementById('fcFlip').onclick=()=>fcCard.classList.toggle('flip');
+document.getElementById('fcKnow').onclick=()=>{ state.flash[fcOrder[fcPos]]='known'; save(); fcNext(); upd(); toast("Nice — next card"); };
+document.getElementById('fcAgain').onclick=()=>{ state.flash[fcOrder[fcPos]]='again'; save(); fcNext(); upd(); };
+document.addEventListener('keydown',e=>{ if(curSec!=='flash') return;
+  if(e.code==='Space'){e.preventDefault(); fcCard.classList.toggle('flip');}
+  if(e.key==='ArrowRight') fcNext();
+  if(e.key==='ArrowLeft'){fcPos=(fcPos-1+flashcards.length)%flashcards.length; fcRender();} });
+
+/* ---------------- TRACING ---------------- */
+const tracing = [
+ {code:"int a = 4;\nint b = 12;\nSystem.out.print(\"Hello!\");\nif ((a < 5) && (b < 5)) {\n    System.out.println(\"A\");\n}\nif (b > 5) {\n    System.out.println(\"B\");\n} else if (a == 4) {\n    System.out.println(\"C\");\n}\nif (a < 10) {\n    System.out.println(\"D\");\n}",
+  ans:"Hello!B\nD", why:"a<5 && b<5 → false (12 not <5), so no A. b>5 → prints B. The else-if is skipped. a<10 → prints D."},
+ {code:"int num = 6;\nwhile (num > 1) {\n    if (num % 2 == 0) {\n        System.out.println(num);\n    } else {\n        System.out.println(\"ABA\");\n    }\n    num -= 1;\n}",
+  ans:"6\nABA\n4\nABA\n2", why:"Values 6,5,4,3,2: even ones print the number, odd ones print ABA. Stops when num == 1."},
+ {code:"int a = 15;\nint b = 4;\ndouble c = 4.0;\nint d = a - b;\nint e = a / b;\nint f = b / a;\ndouble g = a / c;\nSystem.out.println(d);\nSystem.out.println(e);\nSystem.out.println(f);\nSystem.out.println(g);",
+  ans:"11\n3\n0\n3.75", why:"d=11. e=15/4=3 (int). f=4/15=0 (int). g=15/4.0=3.75 (double)."},
+ {code:"int total = 100;\nint num = 4;\nwhile (num <= 10) {\n    total += num * 2;\n    System.out.println(num + \": \" + total);\n    num += 2;\n}",
+  ans:"4: 108\n6: 120\n8: 136\n10: 156", why:"Adds 8,12,16,20 to total across num=4,6,8,10."},
+ {code:"int a = 9;\nint b = 12;\nif ((a == 8) || (b == 12)) { System.out.print(\"A\"); }\nif ((a == 8) && (b == 12)) { System.out.print(\"B\"); }\nif ((a == 9) || (b == 12)) { System.out.print(\"C\"); }\nif ((a == 9) && (b == 12)) { System.out.print(\"D\"); }",
+  ans:"ACD", why:"Only the first, third and fourth conditions are true. print() keeps them on one line."},
+ {code:"int i = 6;\nint j = 15;\nwhile (i < 13) {\n    System.out.println(\"(\" + i + \", \" + j + \")\");\n    i += 2;\n    j--;\n}",
+  ans:"(6, 15)\n(8, 14)\n(10, 13)\n(12, 12)", why:"i goes 6,8,10,12 while j counts down 15,14,13,12."},
+ {code:"int i = 1;\nwhile (i <= 5) {\n    if (i % 2 == 0) { System.out.print(i + \": A\"); }\n    else if (i % 3 == 0) { System.out.print(i + \": B\"); }\n    else { System.out.print(i + \": C\"); }\n    if (i % 5 == 0) { System.out.print(\"D\"); }\n    System.out.println();\n    i += 1;\n}",
+  ans:"1: C\n2: A\n3: B\n4: A\n5: CD", why:"Even→A, else multiple of 3→B, else C. Then append D when i is a multiple of 5 (only i=5)."},
+ {code:"int a = 4;\nint b = 16;\nint c = 7;\nwhile (b / c > 0) {\n    System.out.println(a + \" * \" + b);\n    a = (a + b) % c;\n    b -= 2;\n    c++;\n}",
+  ans:"4 * 16\n6 * 14\n4 * 12\n7 * 10", why:"b/c stays >0 for four passes (2,1,1,1 → then 0). a recomputed each pass."},
+ {code:"int i = 12;\nwhile (i <= 40) {\n    System.out.print(i + \" \");\n    if (i % 10 == 0) { System.out.println(); }\n    i += 2;\n}",
+  ans:"12 14 16 18 20\n22 24 26 28 30\n32 34 36 38 40", why:"Even numbers 12–40; a newline after each multiple of 10 (20,30,40)."},
+ {code:"int i = 4;\nwhile (i <= 7) {\n    System.out.print(i);\n    if (i > 4) { System.out.print(\"A\"); }\n    if (i < 6) { System.out.print(\"B\"); } else { System.out.print(\"C\"); }\n    if (i % 2 == 0) { System.out.print(\"D\"); }\n    System.out.println();\n    i += 1;\n}",
+  ans:"4BD\n5AB\n6ACD\n7AC", why:"Build each line: i, then A if i>4, then B if i<6 else C, then D if even."},
+ {code:"int a = 5;\nint b = 11;\nint c = a * 2;\na -= 1;\nint d = a;\nint e = b / d;\ndouble f = 14.0 / d;\nSystem.out.println(\"a=\" + a);\nSystem.out.println(\"b=\" + b);\nSystem.out.println(\"c=\" + c);\nSystem.out.println(\"d=\" + d);\nSystem.out.println(\"e=\" + e);\nSystem.out.println(\"f=\" + f);",
+  ans:"a=4\nb=11\nc=10\nd=4\ne=2\nf=3.5", why:"c=a*2=10 computed before a changes; a becomes 4; e=11/4=2; f=14.0/4=3.5."},
+ {code:"// input: 6 10 11 1 16 20 2 4\nint n = input.nextInt();\nint m = 0;\nwhile (n != 2) {\n    if (n % 3 == 1) { m += n; }\n    else if (n > 15) { m++; }\n    System.out.println(m);\n    n = input.nextInt();\n}\nSystem.out.println(n);",
+  input:"6 10 11 1 16 20 2 4",
+  ans:"0\n10\n10\n11\n27\n28\n2", why:"n=6→0; 10 (10%3==1)→10; 11→10; 1→11; 16→27; 20 (>15)→28; then n=2 ends loop and prints 2."},
+ {code:"// input: 4 3 9 2 4 9 7 3 12 5\nint a = 0;\nwhile (a < 9) {\n    int b = input.nextInt();\n    int c = input.nextInt();\n    int d = b / c + b % c;\n    a += d;\n    System.out.println(d + \",\" + a);\n}\nSystem.out.println(\"Done\");",
+  input:"4 3 9 2 4 9 7 3 12 5",
+  ans:"2,2\n5,7\n4,11\nDone", why:"Pairs (4,3)→d=2; (9,2)→d=5; then a=11 ≥ 9 ends the loop. Remaining input unused."},
+ {code:"int g = 5;\nint h = 38;\nwhile (h > 25) {\n    System.out.println(h + \" - \" + g + \" = \" + (h - g));\n    h -= 3;\n    g++;\n}",
+  ans:"38 - 5 = 33\n35 - 6 = 29\n32 - 7 = 25\n29 - 8 = 21\n26 - 9 = 17", why:"h: 38,35,32,29,26 while g: 5,6,7,8,9. Stops when h=23 (not > 25)."},
+ {code:"// input lines: dog / cat / jumps / stop / frog / run / stop / red\nString t = \"\";\nString s = input.nextLine();\nwhile (!s.equals(\"stop\")) {\n    t = s + \" \" + t;\n    System.out.println(\"t: \" + t);\n    String q = input.nextLine();\n    System.out.println(\"q: \" + q);\n    s = input.nextLine();\n}",
+  input:"dog\ncat\njumps\nstop\nfrog\nrun\nstop\nred",
+  ans:"t: dog\nq: cat\nt: jumps dog\nq: stop\nt: frog jumps dog\nq: run", why:"Each pass prepends s to t (growing in front). Loop ends when s reads 'stop'."},
+
+/* ---- extra practice (new) ---- */
+ {code:"int x = 10;\nwhile (x > 0) {\n    System.out.println(x);\n    x -= 3;\n}",
+  ans:"10\n7\n4\n1", why:"x takes 10,7,4,1 then becomes -2, which is not > 0."},
+ {code:"int n = 5;\nint sum = 0;\nwhile (n >= 1) {\n    sum += n;\n    n--;\n}\nSystem.out.println(sum);",
+  ans:"15", why:"5+4+3+2+1 = 15."},
+ {code:"int a = 7;\nint b = 3;\nSystem.out.println(a / b);\nSystem.out.println(a % b);\nSystem.out.println(7.0 / 2);\nSystem.out.println(7 / 2.0);",
+  ans:"2\n1\n3.5\n3.5", why:"7/3 = 2; 7%3 = 1; both real divisions give 3.5."},
+ {code:"int i = 0;\nwhile (i < 5) {\n    System.out.print(i * i + \" \");\n    i++;\n}",
+  ans:"0 1 4 9 16", why:"Squares of 0..4, printed on one line by print()."},
+ {code:"int n = 2;\nwhile (n <= 20) {\n    if (n % 2 == 0 && n % 3 == 0) {\n        System.out.println(n + \"!\");\n    } else if (n % 2 == 0) {\n        System.out.println(n);\n    } else {\n        System.out.print(n + \" \");\n    }\n    n += 2;\n}",
+  ans:"2\n4\n6!\n8\n10\n12!\n14\n16\n18!\n20", why:"Even numbers 2..20; multiples of 6 get '!'. All are even, so the else never runs."},
+ {code:"int total = 0;\nint i = 1;\nwhile (i <= 4) {\n    int j = 1;\n    while (j <= 3) {\n        total += i * j;\n        j++;\n    }\n    i++;\n}\nSystem.out.println(total);",
+  ans:"60", why:"Inner loop adds i*(1+2+3)=6i; summed for i=1..4 gives 6+12+18+24 = 60."},
+ {code:"int a = 5;\nint b = 2;\nwhile (b < 10) {\n    a += b;\n    b += 3;\n    System.out.println(a + \" \" + b);\n}",
+  ans:"7 5\n12 8\n20 11", why:"b = 2,5,8 passes; after the last, b = 11 ends the loop."},
+ {code:"// input: 3 6 9 1 4\nint x = input.nextInt();\nint count = 0;\nwhile (x != 1) {\n    if (x % 3 == 0) { count++; }\n    System.out.println(count);\n    x = input.nextInt();\n}\nSystem.out.println(count);",
+  input:"3 6 9 1 4",
+  ans:"1\n2\n3\n3", why:"3, 6, 9 are each divisible by 3; loop ends when x = 1 and prints 3."},
+ {code:"int i = 10;\nwhile (i > 0) {\n    if (i % 2 == 0) { System.out.print(\"E\"); }\n    else { System.out.print(\"O\"); }\n    i -= 3;\n}",
+  ans:"EOEO", why:"i = 10,7,4,1 gives Even, Odd, Even, Odd."},
+ {code:"int num = 24;\nwhile (num > 0) {\n    num = num / 2;\n    System.out.print(num + \" \");\n}",
+  ans:"12 6 3 1 0", why:"Halving each pass, including the final 1/2 = 0, then the loop stops."},
+ {code:"// input: 5 8 3 12 7 1\nint sum = 0;\nint n = input.nextInt();\nwhile (n != 1) {\n    sum += n;\n    System.out.println(sum);\n    n = input.nextInt();\n}",
+  input:"5 8 3 12 7 1",
+  ans:"5\n13\n16\n28\n35", why:"Running totals until 1 stops the loop (the 1 is not added)."},
+ {code:"int a = 3;\nint b = 8;\nwhile (a < b) {\n    System.out.println(a + \",\" + b);\n    a += 2;\n    b--;\n}",
+  ans:"3,8\n5,7", why:"a=3,b=8 then a=5,b=7; next a=7,b=6 and 7 < 6 is false."},
+ {code:"int n = 100;\nint steps = 0;\nwhile (n > 10) {\n    n -= 15;\n    steps++;\n}\nSystem.out.println(n);\nSystem.out.println(steps);",
+  ans:"10\n6", why:"n = 85,70,55,40,25,10 in six steps; 10 > 10 is false."},
+ {code:"int i = 1;\nint count = 0;\nwhile (i <= 15) {\n    if (i % 4 == 0 || i % 5 == 0) { count++; }\n    i++;\n}\nSystem.out.println(count);",
+  ans:"6", why:"Numbers up to 15 divisible by 4 or 5: 4,8,12 and 5,10,15 → 6 total."},
+ {code:"int x = 0;\nwhile (x < 3) {\n    int y = 0;\n    while (y < 4) {\n        System.out.print(x + \"\" + y + \" \");\n        y++;\n    }\n    System.out.println();\n    x++;\n}",
+  ans:"00 01 02 03\n10 11 12 13\n20 21 22 23", why:"Nested loops: outer x, inner y, printing each xy pair."}
+];
+let trPos=0;
+function trRender(){
+  const t=tracing[trPos];
+  document.getElementById('trNo').textContent=String(trPos+1);
+  document.getElementById('trTitle').textContent=(state.trace[trPos]?'✓ completed':'not yet checked');
+  document.getElementById('trCode').textContent=t.code;
+  const iw=document.getElementById('trInputWrap');
+  iw.innerHTML = t.input ? '<label class="small muted">Program input</label><pre>'+t.input.replace(/</g,'&lt;')+'</pre>' : '';
+  const a=document.getElementById('trAnswer'); a.value='';
+  const fb=document.getElementById('trFb'); fb.className='fb'; fb.innerHTML='';
+  document.getElementById('trProg').textContent=(trPos+1)+" of "+tracing.length;
+  document.getElementById('trCount').textContent=(trPos+1)+" / "+tracing.length;
+}
+function norm(s){ return s.replace(/\r/g,'').split('\n').map(l=>l.replace(/^\s+|\s+$/g,'')).filter(l=>l.length).join('\n'); }
+document.getElementById('trCheck').onclick=()=>{
+  const t=tracing[trPos], got=document.getElementById('trAnswer').value, fb=document.getElementById('trFb');
+  const g=norm(got), a=norm(t.ans);
+  if(!g){ fb.className='fb show bad'; fb.innerHTML='Type what the program prints first.'; return; }
+  if(g===a){ state.trace[trPos]='done'; save(); upd();
+    fb.className='fb show good'; fb.innerHTML='<b>Correct!</b> '+t.why; }
+  else if(g.toLowerCase()===a.toLowerCase()){ fb.className='fb show near';
+    fb.innerHTML='<b>Almost</b> — only letter case differs.<br><b>Expected:</b><pre>'+t.ans.replace(/</g,'&lt;')+'</pre>'; }
+  else { fb.className='fb show bad';
+    fb.innerHTML='<b>Not quite.</b> Compare line by line.<br><b>Expected:</b><pre>'+t.ans.replace(/</g,'&lt;')+'</pre>'; }
+};
+document.getElementById('trReveal').onclick=()=>{
+  const t=tracing[trPos], fb=document.getElementById('trFb');
+  fb.className='fb show near'; fb.innerHTML='<b>Answer:</b><pre>'+t.ans.replace(/</g,'&lt;')+'</pre><div class="small muted" style="margin-top:6px">'+t.why+'</div>';
+};
+document.getElementById('trClear').onclick=()=>document.getElementById('trAnswer').value='';
+document.getElementById('trNext').onclick=()=>{ trPos=(trPos+1)%tracing.length; trRender(); };
+document.getElementById('trPrev').onclick=()=>{ trPos=(trPos-1+tracing.length)%tracing.length; trRender(); };
+
+/* ---------------- QUIZ ---------------- */
+const quiz = [
+ {q:"<code>9 / 2</code> (both ints) equals?", o:["4","4.0","4.5","5"], c:0, e:"Integer division truncates, so 9/2 = 4."},
+ {q:"<code>9 % 2</code> equals?", o:["0","1","4","4.5"], c:1, e:"9 = 4*2 + 1, so the remainder is 1."},
+ {q:"<code>-7 / 2</code> equals?", o:["-3","-4","-3.5","3"], c:0, e:"Integer division truncates toward zero, so -7/2 = -3."},
+ {q:"<code>-7 % 2</code> equals?", o:["-1","1","-3","3"], c:0, e:"The remainder's sign follows the dividend, so it's -1."},
+ {q:"Random integer in [0, 10)?", o:["(int)(Math.random()*10)","(int)(Math.random()*10)+1","(int)(Math.random()*11)","(int)(Math.random()*9)+1"], c:0, e:"(int)(Math.random()*10) gives 0..9."},
+ {q:"Random integer in [-5, 5)?", o:["(int)(Math.random()*10)-5","(int)(Math.random()*5)-5","(int)(Math.random()*10)+5","(int)(Math.random()*5)"], c:0, e:"Width is 10, shifted down by 5."},
+ {q:"Values Math.random() can return?", o:["0.0 up to but not including 1.0","0.0 to 1.0 inclusive","any double","integers 0..1"], c:0, e:"It's a double in [0.0, 1.0)."},
+ {q:"<code>15 / 4.0</code> equals?", o:["3.75","3","3.0","4"], c:0, e:"One operand is a double, so it's real division: 3.75."},
+ {q:"<code>4 / 15</code> (both ints) equals?", o:["0","0.26","0.27","1"], c:0, e:"4/15 truncates to 0."},
+ {q:"With <code>int x=(int)(Math.random()*6)+1;</code>, what's the range?", o:["1 to 6","0 to 6","0 to 5","1 to 5"], c:0, e:"*6 gives 0..5, +1 shifts to 1..6."},
+ {q:"If a=9, b=0, is <code>(a==9) || (b==12)</code> true?", o:["true","false","compile error","unknown"], c:0, e:"|| needs just one true side; a==9 is true."},
+ {q:"In <code>if/else if/else</code>, how many branches run?", o:["Exactly one at most","All that are true","Always one","Zero or many"], c:0, e:"Only the first true branch executes."},
+ {q:"A <code>while</code> loop whose condition is immediately false…", o:["runs zero times","runs once","is a compile error","runs forever"], c:0, e:"The condition is checked first."},
+ {q:"<code>16 / 7</code> equals?", o:["2","2.28","3","1"], c:0, e:"16/7 truncates to 2."},
+ {q:"<code>(4 + 16) % 7</code> equals?", o:["6","2","3","20"], c:0, e:"20 % 7 = 6."},
+ {q:"If a=4, is <code>!(a < 5)</code> true or false?", o:["false","true","compile error","0"], c:0, e:"a<5 is true, so !true = false."},
+ {q:"<code>5 % 1</code> equals?", o:["0","1","5","0.2"], c:0, e:"5 divides evenly by 1, remainder 0."},
+ {q:"Output of <code>\"x\" + 1 + 2</code>?", o:["x12","x3","3x","x123"], c:0, e:"Once a string appears, + concatenates: x12."},
+
+/* ---- extra practice (new) ---- */
+ {q:"<code>System.out.println(10 / 3);</code> outputs?", o:["3","3.33","4","3.0"], c:0, e:"Integer division truncates: 10/3 = 3."},
+ {q:"<code>System.out.println(10.0 / 4);</code> outputs?", o:["2.5","2","2.0","3"], c:0, e:"A double operand makes it real division: 2.5."},
+ {q:"<code>System.out.println(10 % 3);</code> outputs?", o:["1","3","3.33","0"], c:0, e:"10 = 3*3 + 1, so the remainder is 1."},
+ {q:"Range of <code>(int)(Math.random() * 50)</code>?", o:["0 to 49","1 to 50","0 to 50","1 to 49"], c:0, e:"*50 gives 0..49 after truncating the cast."},
+ {q:"Random integer in [5, 12)?", o:["(int)(Math.random()*7)+5","(int)(Math.random()*12)+5","(int)(Math.random()*7)","(int)(Math.random()*5)+7"], c:0, e:"Width is 7, shifted up by 5."},
+ {q:"<code>5 > 3 &amp;&amp; 2 > 4</code> evaluates to?", o:["false","true","compile error","5"], c:0, e:"2 > 4 is false, so the AND is false."},
+ {q:"<code>true || false</code> evaluates to?", o:["true","false","compile error","1"], c:0, e:"OR is true when at least one side is true."},
+ {q:"<code>!(4 == 4)</code> evaluates to?", o:["false","true","0","4"], c:0, e:"4==4 is true, and not-true is false."},
+ {q:"How many times does <code>while (false) { ... }</code> run?", o:["0","1","infinite","compile error"], c:0, e:"The condition is false before the first pass."},
+ {q:"<code>x += 3;</code> is shorthand for?", o:["x = x + 3","x = 3","x = x * 3","x = 3 - x"], c:0, e:"Compound assignment adds to the current value."},
+ {q:"<code>int a = 7; a -= 2; a *= 2;</code> leaves a = ?", o:["10","14","9","5"], c:0, e:"7-2 = 5, then 5*2 = 10."},
+ {q:"<code>24 / 5</code> and <code>24 % 5</code> (both int) are?", o:["4 and 4","4 and 0","4.8 and 4","5 and 4"], c:0, e:"24/5 = 4 remainder 4."},
+ {q:"<code>12 / 5.0</code> equals?", o:["2.4","2","2.0","5"], c:0, e:"A double operand forces real division."},
+ {q:"With a = 7: <code>if (a>10){A} else if (a>5){B} else {C}</code> prints?", o:["B","A","C","B and C"], c:0, e:"7>10 is false, 7>5 is true, so B."},
+ {q:"Scanner method that reads an integer token?", o:["nextInt()","nextLine()","nextDouble()","readInt()"], c:0, e:"nextInt() reads the next integer token."},
+ {q:"<code>Math.random() * 6</code> lies in?", o:["[0, 6)","[0, 6]","[1, 6)","[0, 5]"], c:0, e:"A double in [0, 6): includes 0, excludes 6."}
+];
+let qOrder = quiz.map((_,i)=>i), qPos=0;
+function sh(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function makeOrder(n){ const a=[...Array(n).keys()]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+// Display order of each question's options (so the correct one isn't always first).
+// We store the ORIGINAL index, so saved progress survives a reshuffle on reload.
+const optOrder = quiz.map(q=>makeOrder(q.o.length));
+function qzRender(){
+  if(qPos>=qOrder.length){ qzDone(); return; }
+  const i=qOrder[qPos], q=quiz[i], host=document.getElementById('qzHost');
+  const answered = state.quiz[i]!==undefined;
+  host.innerHTML = '<div class="qcard"><div class="qtop"><div><span class="chip">Q'+(qPos+1)+'</span></div>'+
+    '<div class="small faint">'+(qPos+1)+' of '+qOrder.length+'</div></div>'+
+    '<div style="font-size:16px;font-weight:600;margin-bottom:12px">'+q.q+'</div><div id="qzOpts"></div><div class="fb" id="qzFb"></div>'+
+    '<div class="row" style="margin-top:12px"><button class="btn primary" id="qzNext" disabled>Next →</button></div></div>';
+  const opts=document.getElementById('qzOpts');
+  const order=optOrder[i];
+  order.forEach((orig,dp)=>{
+    const el=document.createElement('div'); el.className='opt'; el.innerHTML='<div class="k">'+String.fromCharCode(65+dp)+'</div><div>'+q.o[orig]+'</div>';
+    el.onclick=()=>qzPick(i,orig); opts.appendChild(el);
+  });
+  if(answered) qzPick(i,state.quiz[i],true);
+  document.getElementById('qzNext').onclick=()=>{ qPos++; qzRender(); };
+}
+function qzPick(i,orig,replay){
+  const q=quiz[i], opts=[...document.querySelectorAll('#qzOpts .opt')], fb=document.getElementById('qzFb');
+  const order=optOrder[i], cd=order.indexOf(q.c);
+  opts.forEach(o=>o.classList.add('disabled'));
+  if(cd>=0) opts[cd].classList.add('correct');
+  const chd=order.indexOf(orig);
+  if(orig!==q.c && chd>=0) opts[chd].classList.add('wrong');
+  fb.className='fb show '+(orig===q.c?'good':'bad');
+  fb.innerHTML=(orig===q.c?'<b>Correct.</b> ':'<b>Answer: '+q.o[q.c]+'.</b> ')+q.e;
+  if(!replay){ if(state.quiz[i]===undefined){ state.quizSeen++; if(orig===q.c) state.quizRight++; }
+    state.quiz[i]=orig; save(); upd(); }
+  document.getElementById('qzNext').disabled=false;
+}
+function qzDone(){
+  document.getElementById('qzHost').innerHTML='<div class="qcard center"><h3>Quiz complete 🎉</h3>'+
+    '<p class="muted">You answered '+state.quizSeen+' questions with '+state.quizRight+' correct ('+
+    (state.quizSeen?Math.round(state.quizRight/state.quizSeen*100):0)+'%).</p>'+
+    '<button class="btn primary" id="qzAgain">Shuffle &amp; go again</button></div>';
+  document.getElementById('qzAgain').onclick=()=>{ sh(qOrder); qPos=0; qzRender(); };
+}
+document.getElementById('qzShuffle').onclick=()=>{ sh(qOrder); qPos=0; qzRender(); };
+
+/* ---------------- CODING TASKS ---------------- */
+const coding = [
+ {t:"Sum & average until 0", p:"Read numbers from the user until 0 is entered. Print the sum and the average of the numbers (don't count the 0).",
+  s:"import java.util.Scanner;\n\npublic class Review1 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int sum = 0, count = 0;\n    int n = input.nextInt();\n    while (n != 0) {\n      sum += n;\n      count++;\n      n = input.nextInt();\n    }\n    if (count > 0) {\n      double avg = (double) sum / count;   // cast so it's not integer division\n      System.out.println(\"Sum: \" + sum);\n      System.out.println(\"Average: \" + avg);\n    } else {\n      System.out.println(\"No numbers entered.\");\n    }\n  }\n}"},
+ {t:"A / B / C classifier", p:"Read an integer. Print A if it is less than 100 AND a multiple of 5; else print B if it is less than 100 OR a multiple of 5; else print C. Exactly one prints.",
+  s:"import java.util.Scanner;\n\npublic class Review2 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    if (n < 100 && n % 5 == 0) {\n      System.out.println(\"A\");\n    } else if (n < 100 || n % 5 == 0) {\n      System.out.println(\"B\");\n    } else {\n      System.out.println(\"C\");\n    }\n  }\n}",
+  ex:"65→A, 47→B, 120→B, 143→C."},
+ {t:"Countdown grid 99→80", p:"Use a while loop that decreases by one each pass to print 99 down to 80, five per line.",
+  s:"public class Review3 {\n  public static void main(String[] args) {\n    int n = 99;\n    while (n >= 80) {\n      System.out.print(n + \" \");\n      if (n % 5 == 0) System.out.println();   // newline after 95,90,85,80\n      n--;\n    }\n  }\n}"},
+ {t:"Even/odd 4→19", p:"Print 4,7,10,13,16,19 each labeled even or odd using an if inside a while loop.",
+  s:"public class EvenOdd {\n  public static void main(String[] args) {\n    int i = 4;\n    while (i <= 19) {\n      if (i % 2 == 0) System.out.println(i + \": even\");\n      else            System.out.println(i + \": odd\");\n      i += 3;\n    }\n  }\n}",
+  ex:"Output:\n4: even\n7: odd\n10: even\n13: odd\n16: even\n19: odd"},
+ {t:"Flip a coin 100 times", p:"Simulate 100 coin flips and print how many were heads.",
+  s:"public class Coin {\n  public static void main(String[] args) {\n    int heads = 0;\n    int flips = 0;\n    while (flips < 100) {\n      if (Math.random() < 0.5) heads++;\n      flips++;\n    }\n    System.out.println(\"Heads: \" + heads);\n  }\n}"},
+ {t:"Positives vs negatives", p:"Read numbers; count positives and negatives (ignore 0). Stop once negatives exceed positives, then print both counts.",
+  s:"import java.util.Scanner;\n\npublic class Counts {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int pos = 0, neg = 0;\n    int n = input.nextInt();\n    while (neg <= pos) {\n      if (n > 0)      pos++;\n      else if (n < 0) neg++;\n      // 0 is ignored\n      n = input.nextInt();\n    }\n    System.out.println(pos + \" positives\");\n    System.out.println(neg + \" negatives\");\n  }\n}",
+  ex:"Input 6 70 -2 -4 13 0 16 -1 19 -56 -19 -2 14 5 → 5 positives / 6 negatives."}
+];
+const cdHost=document.getElementById('cdHost');
+coding.forEach((c,idx)=>{
+  const d=document.createElement('div'); d.className='qcard'; d.style.marginBottom='14px';
+  d.innerHTML='<div class="qtop"><div><span class="chip">Task '+(idx+1)+'</span></div>'+
+    '<div class="small faint" id="cdm'+idx+'">'+(state.coding[idx]?'✓ practiced':'')+'</div></div>'+
+    '<h3 style="margin:0 0 6px">'+c.t+'</h3><p class="muted small" style="margin:0 0 10px">'+c.p+'</p>'+
+    (c.ex?'<div class="small faint" style="margin-bottom:10px">Example: '+c.ex.replace(/\n/g,'<br>')+'</div>':'')+
+    '<div class="row"><button class="btn sm" data-t="s'+idx+'">Show solution</button>'+
+    '<button class="btn sm ok" data-t="m'+idx+'">Mark practiced</button></div>'+
+    '<pre id="s'+idx+'" style="display:none;margin-top:12px"></pre>';
+  d.querySelector('[data-t="s'+idx+'"]').onclick=e=>{const p=d.querySelector('#s'+idx); p.textContent=c.s; p.style.display=p.style.display==='none'?'block':'none';};
+  d.querySelector('[data-t="m'+idx+'"]').onclick=()=>{ state.coding[idx]='done'; save(); document.getElementById('cdm'+idx).textContent='✓ practiced'; upd(); toast("Marked practiced"); };
+  cdHost.appendChild(d);
+});
+
+/* ---------------- EXAM ---------------- */
+let exSet=[], exPos=0, exAns=[], exTime=15*60, exTick=null, exRunning=false;
+document.getElementById('exStart').onclick=()=>{
+  exSet=sh(quiz.map((_,i)=>i)).slice(0,12); exPos=0; exAns=[]; exTime=15*60; exRunning=true;
+  document.getElementById('exIntro').style.display='none';
+  document.getElementById('exBody').style.display='block';
+  document.getElementById('exResult').style.display='none';
+  exTick=setInterval(()=>{ exTime--; paintTimer(); if(exTime<=0){ clearInterval(exTick); exFinish(); } },1000);
+  paintTimer(); exRender();
+};
+function paintTimer(){ const m=Math.floor(exTime/60), s=exTime%60;
+  document.getElementById('exTimer').textContent=m+':'+String(s).padStart(2,'0'); }
+function exRender(){
+  if(exPos>=exSet.length){ exFinish(); return; }
+  const i=exSet[exPos], q=quiz[i];
+  document.getElementById('exNo').textContent='Q'+(exPos+1);
+  document.getElementById('exProg').textContent=(exPos+1)+' / '+exSet.length;
+  document.getElementById('exQ').innerHTML='<div style="font-size:16px;font-weight:600;margin-bottom:12px">'+q.q+'</div>';
+  const o=document.getElementById('exOpts'); o.innerHTML='';
+  const order=optOrder[i];
+  order.forEach((orig,dp)=>{ const el=document.createElement('div'); el.className='opt';
+    el.innerHTML='<div class="k">'+String.fromCharCode(65+dp)+'</div><div>'+q.o[orig]+'</div>';
+    el.onclick=()=>{ exAns[exPos]=orig; [...o.children].forEach(c=>c.classList.add('disabled'));
+      o.children[order.indexOf(q.c)].classList.add('correct'); if(orig!==q.c) el.classList.add('wrong');
+      document.getElementById('exNext').textContent=(exPos===exSet.length-1)?'Finish':'Next →'; };
+    o.appendChild(el); });
+  document.getElementById('exNext').onclick=()=>{ if(exAns[exPos]===undefined){ toast('Pick an answer'); return; }
+    exPos++; exRender(); };
+  document.getElementById('exNext').textContent='Next →';
+}
+function exFinish(){
+  if(!exRunning) return; exRunning=false; clearInterval(exTick);
+  document.getElementById('exBody').style.display='none';
+  let right=0; exSet.forEach((qi,idx)=>{ if(exAns[idx]===quiz[qi].c) right++; });
+  const pct=Math.round(right/exSet.length*100);
+  if(state.examBest==null || pct>state.examBest){ state.examBest=pct; save(); }
+  const res=document.getElementById('exResult'); res.style.display='block';
+  let rows=''; exSet.forEach((qi,idx)=>{ const q=quiz[qi], ok=exAns[idx]===q.c;
+    rows+='<div style="padding:10px 0;border-top:1px solid var(--line)"><div style="font-weight:600">'+
+      (ok?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>')+' Q'+(idx+1)+': '+q.q+'</div>'+
+      '<div class="small muted" style="margin-top:4px">Correct: <b>'+q.o[q.c]+'</b> — '+q.e+'</div></div>'; });
+  res.innerHTML='<div class="card center"><div class="ring" style="--p:'+pct+';margin:0 auto"><span>'+pct+'%</span></div>'+
+    '<h3 style="margin-top:12px">'+right+' / '+exSet.length+' correct</h3>'+
+    '<p class="muted small">Best exam: '+(state.examBest||pct)+'%</p>'+
+    '<div class="row" style="justify-content:center"><button class="btn primary" id="exAgain">Retake</button></div></div>'+
+    '<div class="card" style="margin-top:14px">'+rows+'</div>';
+  document.getElementById('exAgain').onclick=()=>{ document.getElementById('exResult').style.display='none'; document.getElementById('exIntro').style.display='block'; };
+  upd();
+}
+document.getElementById('exQuit').onclick=()=>exFinish();
+
+/* ---------------- NAV / GLOBAL ---------------- */
+let curSec='dash';
+function show(sec){
+  curSec=sec;
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', s.id==='s-'+sec));
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.t===sec));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(sec==='flash') fcRender();
+  if(sec==='trace') trRender();
+  if(sec==='quiz') qzRender();
+}
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>show(b.dataset.t));
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+document.getElementById('resetAll').onclick=()=>{ if(confirm('Reset all progress?')){ localStorage.removeItem(LS); location.reload(); } };
+
+function renderDots(host,n,stateFn){ host.innerHTML=''; for(let i=0;i<n;i++){ const d=document.createElement('div');
+  d.className='pdot'+(stateFn(i)==='known'||stateFn(i)==='done'?' done':''); host.appendChild(d);} }
+
+/* ---------------- PROGRESS ---------------- */
+function pct(obj,n){ let c=0; for(let i=0;i<n;i++){ const v=obj[i]; if(v!==undefined && v!==null && v!==false) c++; } return n?Math.round(c/n*100):0; }
+function upd(){
+  const pf=pct(state.flash,flashcards.length), pt=pct(state.trace,tracing.length),
+        pq=pct(state.quiz,quiz.length), pc=pct(state.coding,coding.length);
+  const all=Math.round((pf+pt+pq+pc)/4);
+  document.getElementById('m-overall').textContent=all+'%';
+  document.getElementById('bar-overall').style.width=all+'%';
+  const doneItems=Object.keys(state.flash).length+Object.keys(state.trace).length+Object.keys(state.quiz).length+Object.keys(state.coding).length;
+  const totalItems=flashcards.length+tracing.length+quiz.length+coding.length;
+  document.getElementById('m-done').textContent=doneItems;
+  document.getElementById('m-total').textContent='of '+totalItems+' items';
+  document.getElementById('m-acc').textContent = state.quizSeen? Math.round(state.quizRight/state.quizSeen*100)+'%' : '—';
+  document.getElementById('ring1').style.setProperty('--p',all);
+  document.getElementById('ring1v').textContent=all+'%';
+  document.getElementById('p-flash').textContent=pf+'%';
+  document.getElementById('p-trace').textContent=pt+'%';
+  document.getElementById('p-quiz').textContent=pq+'%';
+  document.getElementById('p-coding').textContent=pc+'%';
+  document.getElementById('b-flash').textContent=pf+'%';
+  document.getElementById('b-trace').textContent=pt+'%';
+  document.getElementById('b-quiz').textContent=pq+'%';
+}
+
+/* ---------------- COUNTDOWN ---------------- */
+function tickCount(){
+  const test=new Date(); test.setDate(test.getDate()+1); test.setHours(23,44,0,0);
+  if(new Date()>test) test.setDate(test.getDate()+1);
+  let ms=test-new Date(); const d=Math.floor(ms/86400000), h=Math.floor(ms%86400000/3600000), m=Math.floor(ms%3600000/60000);
+  document.getElementById('count').textContent = (d>0?d+'d ':'')+h+'h '+String(m).padStart(2,'0')+'m';
+  document.getElementById('countsub').textContent = 'until 11:44 PM · Unit 1 test';
+}
+setInterval(tickCount,30000); tickCount();
+
+/* ---------------- TOAST ---------------- */
+let tHandle=null;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(tHandle); tHandle=setTimeout(()=>t.classList.remove('show'),1400); }
+
+/* init */
+fcOrder=sh(fcOrder); qOrder=sh(qOrder); upd(); fcRender(); trRender(); qzRender();
+</script>
+</body>
+</html>
