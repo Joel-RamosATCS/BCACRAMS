@@ -196,9 +196,8 @@ textarea:focus{outline:none;border-color:var(--accent)}
       <button data-t="concepts"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7.5L19 7.5V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9.5 13h6M9.5 16.5h6"/></svg></span>Cheat Sheet</button>
       <button data-t="flash"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="13" height="13" rx="2"/><path d="M7.5 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1"/></svg></span>Flashcards<span class="badge" id="b-flash"></span></button>
       <button data-t="trace"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.2"/><path d="M7.5 9.5l3 2.8-3 2.8"/><path d="M13 15h4"/></svg></span>Tracing Drills<span class="badge" id="b-trace"></span></button>
-      <button data-t="quiz"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.5 2.4 5-5.4"/></svg></span>Quiz<span class="badge" id="b-quiz"></span></button>
-      <button data-t="coding"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l-5 5 5 5"/><path d="M15 7l5 5-5 5"/></svg></span>Coding Tasks</button>
-      <button data-t="exam"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></span>Exam Mode</button>
+      <button data-t="coding"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l-5 5 5 5"/><path d="M15 7l5 5-5 5"/></svg></span>Coding Problems</button>
+      <button data-t="exam"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></span>Practice Test</button>
     </nav>
     <div class="sidefoot">
       <div class="t">Test in</div>
@@ -221,8 +220,8 @@ textarea:focus{outline:none;border-color:var(--accent)}
           <div class="barbg"><div class="bar" id="bar-overall"></div></div></div>
         <div class="card stat"><div class="l">Items done</div><div class="n" id="m-done">0</div>
           <div class="small muted" id="m-total">of 0 items</div></div>
-        <div class="card stat"><div class="l">Quiz accuracy</div><div class="n" id="m-acc">—</div>
-          <div class="small muted">answered correctly</div></div>
+        <div class="card stat"><div class="l">Best practice test</div><div class="n" id="m-best">—</div>
+          <div class="small muted">highest score</div></div>
       </div>
 
       <div class="card" style="margin-top:16px">
@@ -230,18 +229,17 @@ textarea:focus{outline:none;border-color:var(--accent)}
           <div class="ring" id="ring1"><span id="ring1v">0%</span></div>
           <div style="flex:1;min-width:220px">
             <h3>Today's plan</h3>
-            <div class="grid g4 small" style="margin-top:8px">
+            <div class="grid g3 small" style="margin-top:8px">
               <div><b id="p-flash">0%</b><div class="faint">Flashcards</div></div>
-              <div><b id="p-trace">0%</b><div class="faint">Tracing</div></div>
-              <div><b id="p-quiz">0%</b><div class="faint">Quiz</div></div>
+              <div><b id="p-trace">0%</b><div class="faint">Output drills</div></div>
               <div><b id="p-coding">0%</b><div class="faint">Coding</div></div>
             </div>
           </div>
         </div>
         <div class="row" style="margin-top:16px">
-          <button class="btn primary" data-go="trace">Start tracing drills →</button>
-          <button class="btn" data-go="quiz">Take the quiz</button>
-          <button class="btn" data-go="exam">⚑ Exam mode</button>
+          <button class="btn primary" data-go="trace">Output drills →</button>
+          <button class="btn" data-go="coding">Coding problems</button>
+          <button class="btn" data-go="exam">Practice test</button>
         </div>
       </div>
 
@@ -259,10 +257,9 @@ textarea:focus{outline:none;border-color:var(--accent)}
           <h3>How to use this (15 min loop)</h3>
           <ol class="small muted" style="margin:8px 0 0;padding-left:18px;line-height:1.9">
             <li>Read the <b>Cheat Sheet</b> once.</li>
-            <li>Run <b>Tracing Drills</b> until you hit 100% (auto-graded).</li>
-            <li>Do the <b>Quiz</b>; read every explanation.</li>
-            <li>Redo <b>Coding Tasks</b> from a blank file.</li>
-            <li>Finish with <b>Exam Mode</b> under the clock.</li>
+            <li>Run the <b>Output drills</b> until you hit 100%.</li>
+            <li>Work the <b>Coding problems</b> from their original prompts.</li>
+            <li>Finish with the <b>Practice test</b> under the clock.</li>
           </ol>
         </div>
       </div>
@@ -323,38 +320,34 @@ textarea:focus{outline:none;border-color:var(--accent)}
       </div>
     </section>
 
-    <!-- ============ QUIZ ============ -->
-    <section class="section" id="s-quiz">
-      <div class="head"><div><h2>Quiz</h2><p>Pick the best answer — feedback is instant.</p></div>
-        <div class="pill" id="qzScore">—</div></div>
-      <div id="qzHost"></div>
-      <div class="row" style="margin-top:14px">
-        <button class="btn" id="qzShuffle">↻ Shuffle &amp; restart</button>
-      </div>
-    </section>
-
-    <!-- ============ CODING ============ -->
+    <!-- ============ CODING (original problem form) ============ -->
     <section class="section" id="s-coding">
-      <div class="head"><div><h2>Coding Tasks</h2><p>Write each from a blank file — that's the real test skill.</p></div>
+      <div class="head"><div><h2>Coding Problems</h2><p>Straight from the review sheets — write the program, then compare with the solution.</p></div>
         <div class="pill" id="cdCount">—</div></div>
       <div id="cdHost"></div>
     </section>
 
-    <!-- ============ EXAM ============ -->
+    <!-- ============ PRACTICE TEST (free response) ============ -->
     <section class="section" id="s-exam">
-      <div class="head"><div><h2>Exam Mode</h2><p>12 questions · 15:00 · no hints. Mimics test pressure.</p></div>
+      <div class="head"><div><h2>Practice Test</h2><p>Free-response, just like the paper test — <b>give the output</b>. No multiple choice.</p></div>
         <div class="pill"><span class="timer" id="exTimer">15:00</span></div></div>
       <div id="exIntro" class="card">
         <h3>Ready?</h3>
-        <p class="muted small">Random mix of concept + output questions. You'll get a score and a review at the end.</p>
+        <p class="muted small">10 problems drawn from the full set. Type each program's output; you'll get a score and a full review at the end. Everything is free-response — same form as the real test.</p>
         <button class="btn primary" id="exStart">Start the clock</button>
       </div>
       <div id="exBody" style="display:none">
         <div class="qcard">
           <div class="qtop"><div><span class="chip alt" id="exNo">Q1</span></div><div class="small faint" id="exProg"></div></div>
-          <div id="exQ"></div>
-          <div id="exOpts"></div>
-          <div class="row" style="margin-top:12px"><button class="btn primary" id="exNext">Next →</button>
+          <div class="split">
+            <div><pre id="exQ"></pre><div id="exInputWrap"></div></div>
+            <div>
+              <label class="small muted">Your output</label>
+              <textarea id="exOpts" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Type what the program prints…"></textarea>
+            </div>
+          </div>
+          <div class="fb" id="exFb"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="exNext">Check</button>
             <button class="btn ghost" id="exQuit">End early</button></div>
         </div>
       </div>
@@ -560,127 +553,65 @@ document.getElementById('trClear').onclick=()=>document.getElementById('trAnswer
 document.getElementById('trNext').onclick=()=>{ trPos=(trPos+1)%tracing.length; trRender(); };
 document.getElementById('trPrev').onclick=()=>{ trPos=(trPos-1+tracing.length)%tracing.length; trRender(); };
 
-/* ---------------- QUIZ ---------------- */
-const quiz = [
- {q:"<code>9 / 2</code> (both ints) equals?", o:["4","4.0","4.5","5"], c:0, e:"Integer division truncates, so 9/2 = 4."},
- {q:"<code>9 % 2</code> equals?", o:["0","1","4","4.5"], c:1, e:"9 = 4*2 + 1, so the remainder is 1."},
- {q:"<code>-7 / 2</code> equals?", o:["-3","-4","-3.5","3"], c:0, e:"Integer division truncates toward zero, so -7/2 = -3."},
- {q:"<code>-7 % 2</code> equals?", o:["-1","1","-3","3"], c:0, e:"The remainder's sign follows the dividend, so it's -1."},
- {q:"Random integer in [0, 10)?", o:["(int)(Math.random()*10)","(int)(Math.random()*10)+1","(int)(Math.random()*11)","(int)(Math.random()*9)+1"], c:0, e:"(int)(Math.random()*10) gives 0..9."},
- {q:"Random integer in [-5, 5)?", o:["(int)(Math.random()*10)-5","(int)(Math.random()*5)-5","(int)(Math.random()*10)+5","(int)(Math.random()*5)"], c:0, e:"Width is 10, shifted down by 5."},
- {q:"Values Math.random() can return?", o:["0.0 up to but not including 1.0","0.0 to 1.0 inclusive","any double","integers 0..1"], c:0, e:"It's a double in [0.0, 1.0)."},
- {q:"<code>15 / 4.0</code> equals?", o:["3.75","3","3.0","4"], c:0, e:"One operand is a double, so it's real division: 3.75."},
- {q:"<code>4 / 15</code> (both ints) equals?", o:["0","0.26","0.27","1"], c:0, e:"4/15 truncates to 0."},
- {q:"With <code>int x=(int)(Math.random()*6)+1;</code>, what's the range?", o:["1 to 6","0 to 6","0 to 5","1 to 5"], c:0, e:"*6 gives 0..5, +1 shifts to 1..6."},
- {q:"If a=9, b=0, is <code>(a==9) || (b==12)</code> true?", o:["true","false","compile error","unknown"], c:0, e:"|| needs just one true side; a==9 is true."},
- {q:"In <code>if/else if/else</code>, how many branches run?", o:["Exactly one at most","All that are true","Always one","Zero or many"], c:0, e:"Only the first true branch executes."},
- {q:"A <code>while</code> loop whose condition is immediately false…", o:["runs zero times","runs once","is a compile error","runs forever"], c:0, e:"The condition is checked first."},
- {q:"<code>16 / 7</code> equals?", o:["2","2.28","3","1"], c:0, e:"16/7 truncates to 2."},
- {q:"<code>(4 + 16) % 7</code> equals?", o:["6","2","3","20"], c:0, e:"20 % 7 = 6."},
- {q:"If a=4, is <code>!(a < 5)</code> true or false?", o:["false","true","compile error","0"], c:0, e:"a<5 is true, so !true = false."},
- {q:"<code>5 % 1</code> equals?", o:["0","1","5","0.2"], c:0, e:"5 divides evenly by 1, remainder 0."},
- {q:"Output of <code>\"x\" + 1 + 2</code>?", o:["x12","x3","3x","x123"], c:0, e:"Once a string appears, + concatenates: x12."},
-
-/* ---- extra practice (new) ---- */
- {q:"<code>System.out.println(10 / 3);</code> outputs?", o:["3","3.33","4","3.0"], c:0, e:"Integer division truncates: 10/3 = 3."},
- {q:"<code>System.out.println(10.0 / 4);</code> outputs?", o:["2.5","2","2.0","3"], c:0, e:"A double operand makes it real division: 2.5."},
- {q:"<code>System.out.println(10 % 3);</code> outputs?", o:["1","3","3.33","0"], c:0, e:"10 = 3*3 + 1, so the remainder is 1."},
- {q:"Range of <code>(int)(Math.random() * 50)</code>?", o:["0 to 49","1 to 50","0 to 50","1 to 49"], c:0, e:"*50 gives 0..49 after truncating the cast."},
- {q:"Random integer in [5, 12)?", o:["(int)(Math.random()*7)+5","(int)(Math.random()*12)+5","(int)(Math.random()*7)","(int)(Math.random()*5)+7"], c:0, e:"Width is 7, shifted up by 5."},
- {q:"<code>5 > 3 &amp;&amp; 2 > 4</code> evaluates to?", o:["false","true","compile error","5"], c:0, e:"2 > 4 is false, so the AND is false."},
- {q:"<code>true || false</code> evaluates to?", o:["true","false","compile error","1"], c:0, e:"OR is true when at least one side is true."},
- {q:"<code>!(4 == 4)</code> evaluates to?", o:["false","true","0","4"], c:0, e:"4==4 is true, and not-true is false."},
- {q:"How many times does <code>while (false) { ... }</code> run?", o:["0","1","infinite","compile error"], c:0, e:"The condition is false before the first pass."},
- {q:"<code>x += 3;</code> is shorthand for?", o:["x = x + 3","x = 3","x = x * 3","x = 3 - x"], c:0, e:"Compound assignment adds to the current value."},
- {q:"<code>int a = 7; a -= 2; a *= 2;</code> leaves a = ?", o:["10","14","9","5"], c:0, e:"7-2 = 5, then 5*2 = 10."},
- {q:"<code>24 / 5</code> and <code>24 % 5</code> (both int) are?", o:["4 and 4","4 and 0","4.8 and 4","5 and 4"], c:0, e:"24/5 = 4 remainder 4."},
- {q:"<code>12 / 5.0</code> equals?", o:["2.4","2","2.0","5"], c:0, e:"A double operand forces real division."},
- {q:"With a = 7: <code>if (a>10){A} else if (a>5){B} else {C}</code> prints?", o:["B","A","C","B and C"], c:0, e:"7>10 is false, 7>5 is true, so B."},
- {q:"Scanner method that reads an integer token?", o:["nextInt()","nextLine()","nextDouble()","readInt()"], c:0, e:"nextInt() reads the next integer token."},
- {q:"<code>Math.random() * 6</code> lies in?", o:["[0, 6)","[0, 6]","[1, 6)","[0, 5]"], c:0, e:"A double in [0, 6): includes 0, excludes 6."}
-];
-let qOrder = quiz.map((_,i)=>i), qPos=0;
 function sh(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
-function makeOrder(n){ const a=[...Array(n).keys()]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
-// Display order of each question's options (so the correct one isn't always first).
-// We store the ORIGINAL index, so saved progress survives a reshuffle on reload.
-const optOrder = quiz.map(q=>makeOrder(q.o.length));
-function qzRender(){
-  if(qPos>=qOrder.length){ qzDone(); return; }
-  const i=qOrder[qPos], q=quiz[i], host=document.getElementById('qzHost');
-  const answered = state.quiz[i]!==undefined;
-  host.innerHTML = '<div class="qcard"><div class="qtop"><div><span class="chip">Q'+(qPos+1)+'</span></div>'+
-    '<div class="small faint">'+(qPos+1)+' of '+qOrder.length+'</div></div>'+
-    '<div style="font-size:16px;font-weight:600;margin-bottom:12px">'+q.q+'</div><div id="qzOpts"></div><div class="fb" id="qzFb"></div>'+
-    '<div class="row" style="margin-top:12px"><button class="btn primary" id="qzNext" disabled>Next →</button></div></div>';
-  const opts=document.getElementById('qzOpts');
-  const order=optOrder[i];
-  order.forEach((orig,dp)=>{
-    const el=document.createElement('div'); el.className='opt'; el.innerHTML='<div class="k">'+String.fromCharCode(65+dp)+'</div><div>'+q.o[orig]+'</div>';
-    el.onclick=()=>qzPick(i,orig); opts.appendChild(el);
-  });
-  if(answered) qzPick(i,state.quiz[i],true);
-  document.getElementById('qzNext').onclick=()=>{ qPos++; qzRender(); };
-}
-function qzPick(i,orig,replay){
-  const q=quiz[i], opts=[...document.querySelectorAll('#qzOpts .opt')], fb=document.getElementById('qzFb');
-  const order=optOrder[i], cd=order.indexOf(q.c);
-  opts.forEach(o=>o.classList.add('disabled'));
-  if(cd>=0) opts[cd].classList.add('correct');
-  const chd=order.indexOf(orig);
-  if(orig!==q.c && chd>=0) opts[chd].classList.add('wrong');
-  fb.className='fb show '+(orig===q.c?'good':'bad');
-  fb.innerHTML=(orig===q.c?'<b>Correct.</b> ':'<b>Answer: '+q.o[q.c]+'.</b> ')+q.e;
-  if(!replay){ if(state.quiz[i]===undefined){ state.quizSeen++; if(orig===q.c) state.quizRight++; }
-    state.quiz[i]=orig; save(); upd(); }
-  document.getElementById('qzNext').disabled=false;
-}
-function qzDone(){
-  document.getElementById('qzHost').innerHTML='<div class="qcard center"><h3>Quiz complete 🎉</h3>'+
-    '<p class="muted">You answered '+state.quizSeen+' questions with '+state.quizRight+' correct ('+
-    (state.quizSeen?Math.round(state.quizRight/state.quizSeen*100):0)+'%).</p>'+
-    '<button class="btn primary" id="qzAgain">Shuffle &amp; go again</button></div>';
-  document.getElementById('qzAgain').onclick=()=>{ sh(qOrder); qPos=0; qzRender(); };
-}
-document.getElementById('qzShuffle').onclick=()=>{ sh(qOrder); qPos=0; qzRender(); };
 
-/* ---------------- CODING TASKS ---------------- */
+/* ---------------- CODING PROBLEMS (original problem form) ---------------- */
 const coding = [
- {t:"Sum & average until 0", p:"Read numbers from the user until 0 is entered. Print the sum and the average of the numbers (don't count the 0).",
-  s:"import java.util.Scanner;\n\npublic class Review1 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int sum = 0, count = 0;\n    int n = input.nextInt();\n    while (n != 0) {\n      sum += n;\n      count++;\n      n = input.nextInt();\n    }\n    if (count > 0) {\n      double avg = (double) sum / count;   // cast so it's not integer division\n      System.out.println(\"Sum: \" + sum);\n      System.out.println(\"Average: \" + avg);\n    } else {\n      System.out.println(\"No numbers entered.\");\n    }\n  }\n}"},
- {t:"A / B / C classifier", p:"Read an integer. Print A if it is less than 100 AND a multiple of 5; else print B if it is less than 100 OR a multiple of 5; else print C. Exactly one prints.",
-  s:"import java.util.Scanner;\n\npublic class Review2 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    if (n < 100 && n % 5 == 0) {\n      System.out.println(\"A\");\n    } else if (n < 100 || n % 5 == 0) {\n      System.out.println(\"B\");\n    } else {\n      System.out.println(\"C\");\n    }\n  }\n}",
-  ex:"65→A, 47→B, 120→B, 143→C."},
- {t:"Countdown grid 99→80", p:"Use a while loop that decreases by one each pass to print 99 down to 80, five per line.",
-  s:"public class Review3 {\n  public static void main(String[] args) {\n    int n = 99;\n    while (n >= 80) {\n      System.out.print(n + \" \");\n      if (n % 5 == 0) System.out.println();   // newline after 95,90,85,80\n      n--;\n    }\n  }\n}"},
- {t:"Even/odd 4→19", p:"Print 4,7,10,13,16,19 each labeled even or odd using an if inside a while loop.",
-  s:"public class EvenOdd {\n  public static void main(String[] args) {\n    int i = 4;\n    while (i <= 19) {\n      if (i % 2 == 0) System.out.println(i + \": even\");\n      else            System.out.println(i + \": odd\");\n      i += 3;\n    }\n  }\n}",
-  ex:"Output:\n4: even\n7: odd\n10: even\n13: odd\n16: even\n19: odd"},
- {t:"Flip a coin 100 times", p:"Simulate 100 coin flips and print how many were heads.",
-  s:"public class Coin {\n  public static void main(String[] args) {\n    int heads = 0;\n    int flips = 0;\n    while (flips < 100) {\n      if (Math.random() < 0.5) heads++;\n      flips++;\n    }\n    System.out.println(\"Heads: \" + heads);\n  }\n}"},
- {t:"Positives vs negatives", p:"Read numbers; count positives and negatives (ignore 0). Stop once negatives exceed positives, then print both counts.",
-  s:"import java.util.Scanner;\n\npublic class Counts {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int pos = 0, neg = 0;\n    int n = input.nextInt();\n    while (neg <= pos) {\n      if (n > 0)      pos++;\n      else if (n < 0) neg++;\n      // 0 is ignored\n      n = input.nextInt();\n    }\n    System.out.println(pos + \" positives\");\n    System.out.println(neg + \" negatives\");\n  }\n}",
-  ex:"Input 6 70 -2 -4 13 0 16 -1 19 -56 -19 -2 14 5 → 5 positives / 6 negatives."}
+ {t:"Review1 — Sum & average until 0",
+  p:"Write a program that reads a list of numbers from the user and then prints the sum and the average. The list ends when the user enters a 0.",
+  start:"import java.util.Scanner;\n\npublic class Review1 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class Review1 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int sum = 0, count = 0;\n    int n = input.nextInt();\n    while (n != 0) {\n      sum += n;\n      count++;\n      n = input.nextInt();\n    }\n    if (count > 0) {\n      double avg = (double) sum / count;\n      System.out.println(\"Sum: \" + sum);\n      System.out.println(\"Average: \" + avg);\n    } else {\n      System.out.println(\"No numbers entered.\");\n    }\n  }\n}"},
+ {t:"Review2 — A / B / C classifier",
+  p:"Ask the user to enter an integer. If it is less than 100 and a multiple of 5, print A. Otherwise, if it is less than 100 or a multiple of 5, print B. Otherwise, print C. Exactly one output prints.",
+  ex:"65 -> A    47 -> B    120 -> B    143 -> C",
+  start:"import java.util.Scanner;\n\npublic class Review2 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class Review2 {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    if (n < 100 && n % 5 == 0) {\n      System.out.println(\"A\");\n    } else if (n < 100 || n % 5 == 0) {\n      System.out.println(\"B\");\n    } else {\n      System.out.println(\"C\");\n    }\n  }\n}"},
+ {t:"Review3 — Countdown grid 99 to 80",
+  p:"Write a program that produces the output below, using a while loop that decreases by one each time through the loop.",
+  ex:"99 98 97 96 95\n94 93 92 91 90\n89 88 87 86 85\n84 83 82 81 80",
+  start:"public class Review3 {\n  public static void main(String[] args) {\n\n  }\n}",
+  s:"public class Review3 {\n  public static void main(String[] args) {\n    int n = 99;\n    while (n >= 80) {\n      System.out.print(n + \" \");\n      if (n % 5 == 0) System.out.println();\n      n--;\n    }\n  }\n}"},
+ {t:"Even / odd from 4 to 19",
+  p:"Write a while loop that prints the output below. The words \"odd\" and \"even\" must come from an if statement inside the loop.",
+  ex:"4: even\n7: odd\n10: even\n13: odd\n16: even\n19: odd",
+  start:"public class EvenOdd {\n  public static void main(String[] args) {\n\n  }\n}",
+  s:"public class EvenOdd {\n  public static void main(String[] args) {\n    int i = 4;\n    while (i <= 19) {\n      if (i % 2 == 0) System.out.println(i + \": even\");\n      else            System.out.println(i + \": odd\");\n      i += 3;\n    }\n  }\n}"},
+ {t:"Flip a coin 100 times",
+  p:"Simulate flipping a coin 100 times. Count the number of times the coin lands on heads and print that number after the simulation is complete.",
+  start:"public class Coin {\n  public static void main(String[] args) {\n\n  }\n}",
+  s:"public class Coin {\n  public static void main(String[] args) {\n    int heads = 0, flips = 0;\n    while (flips < 100) {\n      if (Math.random() < 0.5) heads++;\n      flips++;\n    }\n    System.out.println(\"Heads: \" + heads);\n  }\n}"},
+ {t:"Positives vs negatives",
+  p:"Read a list of numbers. Count the negatives and the positives (ignore 0s). Stop once the number of negatives exceeds the number of positives, then print both counts.",
+  ex:"Input:  6 70 -2 -4 13 0 16 -1 19 -56 -19 -2 14 5\nOutput: 5 positives\n        6 negatives",
+  start:"import java.util.Scanner;\n\npublic class Counts {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n\n  }\n}",
+  s:"import java.util.Scanner;\n\npublic class Counts {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    int pos = 0, neg = 0;\n    int n = input.nextInt();\n    while (neg <= pos) {\n      if (n > 0)      pos++;\n      else if (n < 0) neg++;\n      n = input.nextInt();\n    }\n    System.out.println(pos + \" positives\");\n    System.out.println(neg + \" negatives\");\n  }\n}"}
 ];
-const cdHost=document.getElementById('cdHost');
+state.codeText = state.codeText || {};
+const cdHost = document.getElementById('cdHost');
 coding.forEach((c,idx)=>{
   const d=document.createElement('div'); d.className='qcard'; d.style.marginBottom='14px';
-  d.innerHTML='<div class="qtop"><div><span class="chip">Task '+(idx+1)+'</span></div>'+
-    '<div class="small faint" id="cdm'+idx+'">'+(state.coding[idx]?'✓ practiced':'')+'</div></div>'+
+  d.innerHTML='<div class="qtop"><div><span class="chip">Problem '+(idx+1)+'</span></div>'+
+    '<div class="small faint" id="cdm'+idx+'">'+(state.coding[idx]?'✓ done':'')+'</div></div>'+
     '<h3 style="margin:0 0 6px">'+c.t+'</h3><p class="muted small" style="margin:0 0 10px">'+c.p+'</p>'+
-    (c.ex?'<div class="small faint" style="margin-bottom:10px">Example: '+c.ex.replace(/\n/g,'<br>')+'</div>':'')+
-    '<div class="row"><button class="btn sm" data-t="s'+idx+'">Show solution</button>'+
-    '<button class="btn sm ok" data-t="m'+idx+'">Mark practiced</button></div>'+
+    (c.ex?'<div class="small faint" style="margin-bottom:10px;white-space:pre-wrap">'+c.ex+'</div>':'')+
+    '<label class="small muted">Your code</label>'+
+    '<textarea id="code'+idx+'" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>'+
+    '<div class="row" style="margin-top:10px"><button class="btn sm" data-t="s'+idx+'">Show solution</button>'+
+    '<button class="btn sm ok" data-t="m'+idx+'">Mark done</button></div>'+
     '<pre id="s'+idx+'" style="display:none;margin-top:12px"></pre>';
-  d.querySelector('[data-t="s'+idx+'"]').onclick=e=>{const p=d.querySelector('#s'+idx); p.textContent=c.s; p.style.display=p.style.display==='none'?'block':'none';};
-  d.querySelector('[data-t="m'+idx+'"]').onclick=()=>{ state.coding[idx]='done'; save(); document.getElementById('cdm'+idx).textContent='✓ practiced'; upd(); toast("Marked practiced"); };
+  const ta=d.querySelector('#code'+idx);
+  ta.value = (state.codeText[idx]!==undefined) ? state.codeText[idx] : c.start;
+  ta.addEventListener('input',()=>{ state.codeText[idx]=ta.value; save(); });
+  d.querySelector('[data-t="s'+idx+'"]').onclick=()=>{ const p=d.querySelector('#s'+idx); p.textContent=c.s; p.style.display=(p.style.display==='none'?'block':'none'); };
+  d.querySelector('[data-t="m'+idx+'"]').onclick=()=>{ state.coding[idx]='done'; save(); document.getElementById('cdm'+idx).textContent='✓ done'; upd(); toast('Marked done'); };
   cdHost.appendChild(d);
 });
+document.getElementById('cdCount').textContent = coding.length+' problems';
 
-/* ---------------- EXAM ---------------- */
-let exSet=[], exPos=0, exAns=[], exTime=15*60, exTick=null, exRunning=false;
+/* ---------------- PRACTICE TEST (free response) ---------------- */
+let exSet=[], exPos=0, exRes=[], exTime=15*60, exTick=null, exRunning=false, exGraded=false;
 document.getElementById('exStart').onclick=()=>{
-  exSet=sh(quiz.map((_,i)=>i)).slice(0,12); exPos=0; exAns=[]; exTime=15*60; exRunning=true;
+  exSet=sh(tracing.map((_,i)=>i)).slice(0,10); exPos=0; exRes=[]; exTime=15*60; exRunning=true; exGraded=false;
   document.getElementById('exIntro').style.display='none';
   document.getElementById('exBody').style.display='block';
   document.getElementById('exResult').style.display='none';
@@ -691,38 +622,38 @@ function paintTimer(){ const m=Math.floor(exTime/60), s=exTime%60;
   document.getElementById('exTimer').textContent=m+':'+String(s).padStart(2,'0'); }
 function exRender(){
   if(exPos>=exSet.length){ exFinish(); return; }
-  const i=exSet[exPos], q=quiz[i];
+  const t=tracing[exSet[exPos]]; exGraded=false;
   document.getElementById('exNo').textContent='Q'+(exPos+1);
   document.getElementById('exProg').textContent=(exPos+1)+' / '+exSet.length;
-  document.getElementById('exQ').innerHTML='<div style="font-size:16px;font-weight:600;margin-bottom:12px">'+q.q+'</div>';
-  const o=document.getElementById('exOpts'); o.innerHTML='';
-  const order=optOrder[i];
-  order.forEach((orig,dp)=>{ const el=document.createElement('div'); el.className='opt';
-    el.innerHTML='<div class="k">'+String.fromCharCode(65+dp)+'</div><div>'+q.o[orig]+'</div>';
-    el.onclick=()=>{ exAns[exPos]=orig; [...o.children].forEach(c=>c.classList.add('disabled'));
-      o.children[order.indexOf(q.c)].classList.add('correct'); if(orig!==q.c) el.classList.add('wrong');
-      document.getElementById('exNext').textContent=(exPos===exSet.length-1)?'Finish':'Next →'; };
-    o.appendChild(el); });
-  document.getElementById('exNext').onclick=()=>{ if(exAns[exPos]===undefined){ toast('Pick an answer'); return; }
-    exPos++; exRender(); };
-  document.getElementById('exNext').textContent='Next →';
+  document.getElementById('exQ').textContent=t.code;
+  document.getElementById('exInputWrap').innerHTML = t.input ? '<label class="small muted">Program input</label><pre>'+t.input.replace(/</g,'&lt;')+'</pre>' : '';
+  const ta=document.getElementById('exOpts'); ta.value=''; ta.disabled=false;
+  const fb=document.getElementById('exFb'); fb.className='fb'; fb.innerHTML='';
+  document.getElementById('exNext').textContent='Check';
 }
+function exCheck(){
+  const t=tracing[exSet[exPos]], got=norm(document.getElementById('exOpts').value), want=norm(t.ans);
+  const ok=(got.length>0)&&(got===want);
+  exRes[exPos]=ok; exGraded=true;
+  const fb=document.getElementById('exFb'); fb.className='fb show '+(ok?'good':'bad');
+  fb.innerHTML=(ok?'<b>Correct.</b> ':'<b>Not quite.</b> ')+(ok?t.why:'<b>Expected output:</b><pre>'+t.ans.replace(/</g,'&lt;')+'</pre>');
+  document.getElementById('exOpts').disabled=true;
+  document.getElementById('exNext').textContent=(exPos===exSet.length-1)?'Finish':'Next →';
+}
+document.getElementById('exNext').onclick=()=>{
+  if(!exGraded){ if(!document.getElementById('exOpts').value.trim()){ toast('Type the output first'); return; } exCheck(); return; }
+  exPos++; exRender();
+};
 function exFinish(){
   if(!exRunning) return; exRunning=false; clearInterval(exTick);
   document.getElementById('exBody').style.display='none';
-  let right=0; exSet.forEach((qi,idx)=>{ if(exAns[idx]===quiz[qi].c) right++; });
-  const pct=Math.round(right/exSet.length*100);
-  if(state.examBest==null || pct>state.examBest){ state.examBest=pct; save(); }
+  let right=0; exSet.forEach((qi,idx)=>{ if(exRes[idx]) right++; });
+  const p=Math.round(right/exSet.length*100);
+  if(state.examBest==null || p>state.examBest){ state.examBest=p; save(); }
   const res=document.getElementById('exResult'); res.style.display='block';
-  let rows=''; exSet.forEach((qi,idx)=>{ const q=quiz[qi], ok=exAns[idx]===q.c;
-    rows+='<div style="padding:10px 0;border-top:1px solid var(--line)"><div style="font-weight:600">'+
-      (ok?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>')+' Q'+(idx+1)+': '+q.q+'</div>'+
-      '<div class="small muted" style="margin-top:4px">Correct: <b>'+q.o[q.c]+'</b> — '+q.e+'</div></div>'; });
-  res.innerHTML='<div class="card center"><div class="ring" style="--p:'+pct+';margin:0 auto"><span>'+pct+'%</span></div>'+
-    '<h3 style="margin-top:12px">'+right+' / '+exSet.length+' correct</h3>'+
-    '<p class="muted small">Best exam: '+(state.examBest||pct)+'%</p>'+
-    '<div class="row" style="justify-content:center"><button class="btn primary" id="exAgain">Retake</button></div></div>'+
-    '<div class="card" style="margin-top:14px">'+rows+'</div>';
+  let rows=''; exSet.forEach((qi,idx)=>{ const t=tracing[qi], ok=exRes[idx];
+    rows+='<div style="padding:10px 0;border-top:1px solid var(--line)"><div style="font-weight:600">'+(ok?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>')+' Q'+(idx+1)+'</div><pre style="margin-top:6px">'+t.code.replace(/</g,'&lt;')+'</pre><div class="small muted" style="margin-top:6px"><b>Output:</b><pre style="margin-top:4px">'+t.ans.replace(/</g,'&lt;')+'</pre></div></div>'; });
+  res.innerHTML='<div class="card center"><div class="ring" style="--p:'+p+';margin:0 auto"><span>'+p+'%</span></div><h3 style="margin-top:12px">'+right+' / '+exSet.length+' correct</h3><p class="muted small">Best score: '+(state.examBest||p)+'%</p><div class="row" style="justify-content:center"><button class="btn primary" id="exAgain">Retake</button></div></div><div class="card" style="margin-top:14px">'+rows+'</div>';
   document.getElementById('exAgain').onclick=()=>{ document.getElementById('exResult').style.display='none'; document.getElementById('exIntro').style.display='block'; };
   upd();
 }
@@ -737,7 +668,6 @@ function show(sec){
   window.scrollTo({top:0,behavior:'smooth'});
   if(sec==='flash') fcRender();
   if(sec==='trace') trRender();
-  if(sec==='quiz') qzRender();
 }
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>show(b.dataset.t));
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
@@ -749,25 +679,20 @@ function renderDots(host,n,stateFn){ host.innerHTML=''; for(let i=0;i<n;i++){ co
 /* ---------------- PROGRESS ---------------- */
 function pct(obj,n){ let c=0; for(let i=0;i<n;i++){ const v=obj[i]; if(v!==undefined && v!==null && v!==false) c++; } return n?Math.round(c/n*100):0; }
 function upd(){
-  const pf=pct(state.flash,flashcards.length), pt=pct(state.trace,tracing.length),
-        pq=pct(state.quiz,quiz.length), pc=pct(state.coding,coding.length);
-  const all=Math.round((pf+pt+pq+pc)/4);
+  const pf=pct(state.flash,flashcards.length), pt=pct(state.trace,tracing.length), pc=pct(state.coding,coding.length);
+  const all=Math.round((pf+pt+pc)/3);
   document.getElementById('m-overall').textContent=all+'%';
   document.getElementById('bar-overall').style.width=all+'%';
-  const doneItems=Object.keys(state.flash).length+Object.keys(state.trace).length+Object.keys(state.quiz).length+Object.keys(state.coding).length;
-  const totalItems=flashcards.length+tracing.length+quiz.length+coding.length;
-  document.getElementById('m-done').textContent=doneItems;
-  document.getElementById('m-total').textContent='of '+totalItems+' items';
-  document.getElementById('m-acc').textContent = state.quizSeen? Math.round(state.quizRight/state.quizSeen*100)+'%' : '—';
+  document.getElementById('m-done').textContent=Object.keys(state.flash).length+Object.keys(state.trace).length+Object.keys(state.coding).length;
+  document.getElementById('m-total').textContent='of '+(flashcards.length+tracing.length+coding.length)+' items';
+  document.getElementById('m-best').textContent=(state.examBest==null)?'—':state.examBest+'%';
   document.getElementById('ring1').style.setProperty('--p',all);
   document.getElementById('ring1v').textContent=all+'%';
   document.getElementById('p-flash').textContent=pf+'%';
   document.getElementById('p-trace').textContent=pt+'%';
-  document.getElementById('p-quiz').textContent=pq+'%';
   document.getElementById('p-coding').textContent=pc+'%';
   document.getElementById('b-flash').textContent=pf+'%';
   document.getElementById('b-trace').textContent=pt+'%';
-  document.getElementById('b-quiz').textContent=pq+'%';
 }
 
 /* ---------------- COUNTDOWN ---------------- */
@@ -786,7 +711,7 @@ function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg
   clearTimeout(tHandle); tHandle=setTimeout(()=>t.classList.remove('show'),1400); }
 
 /* init */
-fcOrder=sh(fcOrder); qOrder=sh(qOrder); upd(); fcRender(); trRender(); qzRender();
+fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
 </script>
 </body>
 </html>
