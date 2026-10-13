@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex">
-<meta name="theme-color" content="#08080a">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AP CSA · Unit 1 Cram</title>
@@ -183,6 +181,81 @@ input.stdin:focus{outline:none;border-color:var(--accent)}
   box-shadow:var(--shadow);font-size:13px;transition:.22s;z-index:200}
 .toast.show{opacity:1;transform:translateX(-50%)}
 
+/* ---------- coding workbench ---------- */
+.workbench{display:grid;grid-template-columns:272px minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:1040px){.workbench{grid-template-columns:1fr}.rail{position:static;max-height:none}}
+.rail{position:sticky;top:20px;display:flex;flex-direction:column;gap:3px;padding:10px;border:1px solid var(--line);
+  border-radius:16px;background:var(--surface);box-shadow:var(--shadow);max-height:calc(100vh - 44px);overflow:auto}
+.railhead{display:flex;justify-content:space-between;align-items:center;padding:6px 8px 10px;
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.11em;color:var(--faint)}
+.railitem{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;cursor:pointer;
+  padding:9px 10px;border-radius:11px;border:1px solid transparent;background:transparent;color:var(--muted);
+  font:inherit;transition:background .14s,color .14s,border-color .14s}
+.railitem:hover{background:#17171a;color:var(--text)}
+.railitem.active{background:#191920;border-color:var(--line);color:var(--text)}
+.railitem .n{font:600 11px ui-monospace,monospace;color:var(--faint);flex:0 0 auto;padding-top:1px;font-variant-numeric:tabular-nums}
+.railitem.active .n{color:var(--accent)}
+.railitem .tt{font-size:12.5px;line-height:1.32;font-weight:500}
+.railitem .ok{margin-left:auto;color:var(--green);font-size:12px;flex:0 0 auto}
+
+.stage{min-width:0}
+.probhead{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.probhead .pnum{flex:0 0 auto;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  font:650 15px ui-monospace,monospace;color:#c3c8ff;background:var(--accent-soft);border:1px solid var(--accent-line)}
+.probhead h3{margin:2px 0 5px;font-size:17px;font-weight:620;letter-spacing:-.015em}
+.probhead p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.6;max-width:72ch}
+.tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.tagrow .tag{font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--faint);background:#101013}
+
+.callout{display:flex;gap:12px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:11px;
+  border:1px solid var(--line);background:#0f0f12}
+.callout .cl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);flex:0 0 auto;padding-top:2px}
+.callout pre{margin:0;border:0;background:transparent;padding:0;flex:1;white-space:pre-wrap;color:#cdd0ff;font-size:12.5px}
+
+.ide{border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#0a0a0d;box-shadow:var(--shadow);
+  transition:border-color .15s}
+.ide:focus-within{border-color:var(--accent-line)}
+.idebar{display:flex;align-items:center;gap:12px;padding:9px 12px;background:#101013;border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;display:block;background:#2a2a30}
+.lang{font:600 10px ui-monospace,monospace;letter-spacing:.08em;color:#a8ffd0;background:rgba(63,185,80,.12);
+  border:1px solid rgba(63,185,80,.3);padding:2px 7px;border-radius:6px}
+.idebar .file{display:flex;align-items:center;gap:8px;font:500 12px ui-monospace,monospace;color:var(--muted)}
+.idebar .file b{color:#c3c8ff;font-weight:600}
+.idebar .acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+.idebar .acts .btn{padding:5px 11px;font-size:12px;border-radius:8px}
+
+.editwrap{position:relative;display:grid;grid-template-columns:46px minmax(0,1fr);background:#0a0a0d}
+.gutter{margin:0;padding:14px 9px 14px 0;text-align:right;background:#0d0d11;border-right:1px solid var(--line);
+  color:#43434d;font:12.5px/1.65 "SF Mono",ui-monospace,Menlo,Consolas,monospace;user-select:none;overflow:hidden}
+.codearea{min-width:0}
+.codearea textarea{display:block;width:100%;border:0;border-radius:0;background:transparent;min-height:260px;
+  padding:14px 16px;resize:none;color:#e7e7ee;white-space:pre;overflow-wrap:normal;overflow-x:auto;overflow-y:hidden;
+  font:12.5px/1.65 "SF Mono",ui-monospace,Menlo,Consolas,monospace;tab-size:2}
+.codearea textarea:focus{outline:none}
+.codearea textarea::selection{background:rgba(109,124,255,.35)}
+
+.stdinrow{display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0d0d11;border-top:1px solid var(--line)}
+.stdinrow label{font:600 10px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);flex:0 0 auto}
+.stdinrow input{flex:1;margin:0;background:#0a0a0d;border:1px solid var(--line-2);border-radius:8px;padding:7px 11px;
+  color:var(--text);font:12.5px ui-monospace,monospace}
+.stdinrow input:focus{outline:none;border-color:var(--accent)}
+
+.console{border-top:1px solid var(--line);background:#08080a}
+.conbar{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line)}
+.conbar .ct{font:600 10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.conbar .st{margin-left:auto;font-size:11.5px;color:var(--faint);display:inline-flex;align-items:center;gap:7px}
+.conbar .st .sp{width:11px;height:11px;border-radius:50%;border:2px solid var(--line-2);border-top-color:var(--accent);animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+pre.conout{margin:0;border:0;border-radius:0;background:transparent;min-height:66px;padding:14px 16px;
+  white-space:pre-wrap;color:#d7d7dd;font-size:12.5px}
+pre.conout.err{color:#ffb3ad}
+pre.conout.idle{color:var(--faint)}
+
+.solwrap{margin-top:16px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.solhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 15px}
+.solhead b{font-size:13.5px}
+.solwrap pre{margin:0;border:0;border-radius:0;border-top:1px solid var(--line);background:#0a0a0d;max-height:520px}
+
 </style>
 </head>
 <body>
@@ -322,11 +395,14 @@ input.stdin:focus{outline:none;border-color:var(--accent)}
       </div>
     </section>
 
-    <!-- ============ CODING (original problem form) ============ -->
+    <!-- ============ CODING (workbench) ============ -->
     <section class="section" id="s-coding">
-      <div class="head"><div><h2>Coding Problems</h2><p>Write the program and press <b>Run</b> — it compiles and prints right here. Then compare with the solution.</p></div>
+      <div class="head"><div><h2>Coding Problems</h2><p>Write the program, run it on a real Java sandbox, and compare with the solution.</p></div>
         <div class="pill" id="cdCount">—</div></div>
-      <div id="cdHost"></div>
+      <div class="workbench">
+        <aside class="rail" id="cdRail"></aside>
+        <div class="stage" id="cdStage"></div>
+      </div>
     </section>
 
     <!-- ============ PRACTICE TEST (free response) ============ -->
@@ -649,57 +725,176 @@ function prepJava(src){
   s = s.replace(/(public\s+)?class\s+\w+/, "class Main");   // Judge0 runs the class named Main
   return s;
 }
-async function runCode(idx){
-  const code = document.getElementById('code'+idx).value;
-  const stdin = document.getElementById('in'+idx).value;
-  const out = document.getElementById('out'+idx);
-  out.style.display='block'; out.textContent='Running on the Java sandbox…';
-  const enc = x => btoa(unescape(encodeURIComponent(x)));
+const encB64 = x => btoa(unescape(encodeURIComponent(x == null ? '' : x)));
+const decB64 = x => { try { return (typeof x === 'string' && x) ? decodeURIComponent(escape(atob(x))) : ''; } catch(e){ return ''; } };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+state.codeText = state.codeText || {};
+let cdCur = 0, cdBusy = false;
+const cdRail = document.getElementById('cdRail');
+const cdStage = document.getElementById('cdStage');
+
+function cdSaveCurrent(){
+  const ta = document.getElementById('code');
+  if (ta) state.codeText[cdCur] = ta.value;
+}
+function tagsFor(c){
+  const src = c.p + ' ' + c.start + ' ' + c.s, t = [];
+  if (/Scanner/.test(src)) t.push('Scanner + input');
+  if (/Math\.random/.test(src)) t.push('Math.random');
+  if (/while/.test(src)) t.push('while loop');
+  if (/(^|[^A-Za-z])if([^A-Za-z]|$)/.test(src)) t.push('if / else');
+  if (/%/.test(src)) t.push('modulo %');
+  return t.slice(0, 3);
+}
+function renderRail(){
+  let done = 0;
+  cdRail.innerHTML = '<div class="railhead"><span>' + coding.length + ' problems</span><span id="cdDone"></span></div>';
+  coding.forEach((c, i) => {
+    if (state.coding[i]) done++;
+    const b = document.createElement('button');
+    b.className = 'railitem' + (i === cdCur ? ' active' : '');
+    b.innerHTML = '<span class="n">' + String(i+1).padStart(2,'0') + '</span><span class="tt">' + c.t + '</span><span class="ok">' + (state.coding[i] ? '✓' : '') + '</span>';
+    b.onclick = () => selectProblem(i, true);
+    cdRail.appendChild(b);
+  });
+  const d = document.getElementById('cdDone'); if (d) d.textContent = done + '/' + coding.length;
+}
+function gutterFor(v){ let n = v.split('\n').length, s = ''; for (let i = 1; i <= n; i++) s += i + '\n'; return s; }
+function sizeEditor(){
+  const ta = document.getElementById('code'), g = document.getElementById('gutter');
+  if (!ta) return;
+  ta.style.height = 'auto';
+  ta.style.height = Math.max(ta.scrollHeight, 260) + 'px';
+  if (g) g.textContent = gutterFor(ta.value);
+}
+function stageHTML(c, i){
+  const tags = tagsFor(c).map(x => '<span class="tag">' + x + '</span>').join('');
+  return '<div class="probhead"><div class="pnum">' + String(i+1).padStart(2,'0') + '</div>' +
+    '<div><h3>' + c.t + '</h3><p>' + c.p + '</p><div class="tagrow">' + tags + '</div></div></div>' +
+    (c.ex ? '<div class="callout"><span class="cl">Expected</span><pre>' + c.ex.replace(/</g,'&lt;') + '</pre></div>' : '') +
+    '<div class="ide">' +
+      '<div class="idebar"><div class="dots"><i></i><i></i><i></i></div><span class="lang">JAVA</span>' +
+        '<span class="file"><b>Main.java</b></span>' +
+        '<div class="acts"><button class="btn sm ghost" id="cdInputBtn">Input</button>' +
+        '<button class="btn sm primary" id="cdRun">▶ Run</button></div></div>' +
+      '<div class="editwrap"><pre class="gutter" id="gutter"></pre>' +
+        '<div class="codearea"><textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea></div></div>' +
+      '<div class="stdinrow" id="cdInRow"><label>stdin</label>' +
+        '<input id="cdIn" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="nothing needed — or type input like  3 9 2 12 5 0"></div>' +
+      '<div class="console"><div class="conbar"><span class="ct">Console</span><span class="st" id="cdStatus"></span></div>' +
+        '<pre class="conout idle" id="cdOut">Press Run to compile and run your program.</pre></div>' +
+    '</div>' +
+    '<div class="row" style="margin-top:14px"><button class="btn" id="cdSolBtn">Show solution</button>' +
+      '<button class="btn ok" id="cdDoneBtn">Mark done</button></div>' +
+    '<div class="solwrap" id="cdSolWrap" style="display:none"><div class="solhead"><b>Reference solution</b>' +
+      '<button class="btn ghost sm" id="cdSolHide">Hide</button></div><pre id="cdSolCode"></pre></div>';
+}
+function setOut(text, kind){
+  const out = document.getElementById('cdOut');
+  out.className = 'conout' + (kind ? ' ' + kind : '');
+  out.textContent = text;
+}
+function selectProblem(i, scroll){
+  if (i === cdCur && document.getElementById('code')) { renderRail(); return; }
+  cdSaveCurrent();
+  cdCur = i;
+  renderRail();
+  const c = coding[i];
+  cdStage.innerHTML = stageHTML(c, i);
+  const ta = document.getElementById('code');
+  ta.value = (state.codeText[i] !== undefined) ? state.codeText[i] : c.start;
+  ta.addEventListener('input', () => { state.codeText[i] = ta.value; sizeEditor(); save(); });
+  ta.addEventListener('keydown', e => {
+    if (e.key === 'Tab'){ e.preventDefault();
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      ta.value = ta.value.slice(0, s) + '  ' + ta.value.slice(en);
+      ta.selectionStart = ta.selectionEnd = s + 2;
+      state.codeText[i] = ta.value; sizeEditor(); save();
+    }
+  });
+  sizeEditor();
+  const inRow = document.getElementById('cdInRow'), inEl = document.getElementById('cdIn');
+  inEl.value = c.in || '';
+  if (!c.in) inRow.style.display = 'none';
+  document.getElementById('cdInputBtn').onclick = () => {
+    const showing = inRow.style.display !== 'none';
+    inRow.style.display = showing ? 'none' : 'flex';
+    if (!showing) inEl.focus();
+  };
+  document.getElementById('cdRun').onclick = () => runCode(i);
+  document.getElementById('cdSolBtn').onclick = () => {
+    document.getElementById('cdSolCode').textContent = c.s;
+    document.getElementById('cdSolWrap').style.display = 'block';
+  };
+  document.getElementById('cdSolHide').onclick = () => { document.getElementById('cdSolWrap').style.display = 'none'; };
+  document.getElementById('cdDoneBtn').onclick = () => toggleDone(i);
+  paintDone(i);
+  if (scroll) window.scrollTo({top:0, behavior:'smooth'});
+}
+function paintDone(i){
+  const b = document.getElementById('cdDoneBtn');
+  if (state.coding[i]){ b.textContent = '✓ Done'; b.className = 'btn ok'; }
+  else { b.textContent = 'Mark done'; b.className = 'btn'; }
+}
+function toggleDone(i){
+  if (state.coding[i]) delete state.coding[i]; else state.coding[i] = 'done';
+  save(); paintDone(i); renderRail(); upd();
+  toast(state.coding[i] ? 'Marked done' : 'Marked not done');
+}
+async function runCode(i){
+  if (cdBusy) return;
+  const ta = document.getElementById('code');
+  const inEl = document.getElementById('cdIn');
+  const runBtn = document.getElementById('cdRun');
+  const status = document.getElementById('cdStatus');
+  cdBusy = true;
+  runBtn.disabled = true; runBtn.textContent = 'Running…';
+  const started = Date.now();
+  const tick = setInterval(() => {
+    status.innerHTML = '<span class="sp"></span>running ' + ((Date.now() - started) / 1000).toFixed(1) + 's';
+  }, 200);
+  setOut('Compiling and running on the Java sandbox…', 'idle');
+  status.innerHTML = '<span class="sp"></span>starting';
   try{
-    const r = await fetch('https://ce.judge0.com/submissions?base64_encoded=true&wait=true',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ source_code: enc(prepJava(code)), language_id: 62, stdin: enc(stdin) })
-    });
-    if(r.status===429){ out.textContent='The public Java sandbox is rate-limited right now — wait ~30s and press Run again.'; return; }
-    const d = await r.json();
-    const dec = x => { try { return (typeof x==='string' && x) ? atob(x) : ''; } catch(e){ return x||''; } };
-    let res = dec(d.compile_output) || dec(d.stdout);
-    const se = dec(d.stderr);
-    if(se) res = (res ? res + '\n' : '') + '[stderr] ' + se;
-    if(!res) res = (d.status && d.status.description ? d.status.description : '(no output)') + (d.message ? ' ' + d.message : '');
-    out.textContent = res;
+    const ctrl = new AbortController();
+    const to = setTimeout(() => ctrl.abort(), 25000);
+    let r;
+    try{
+      r = await fetch('https://ce.judge0.com/submissions?base64_encoded=true',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ source_code: encB64(prepJava(ta.value)), language_id: 62, stdin: encB64(inEl ? inEl.value : '') }),
+        signal: ctrl.signal
+      });
+    } finally { clearTimeout(to); }
+    if (r.status === 429){ clearInterval(tick); setOut('The public Java sandbox is rate-limited right now — wait ~30s and press Run again.', 'err'); status.textContent = 'rate-limited'; return; }
+    if (!r.ok) throw new Error('sandbox returned HTTP ' + r.status);
+    let d = await r.json();
+    let waited = 0;
+    while (d.token && waited <= 30000 && !(d.status && d.status.id >= 3)){
+      await sleep(1000); waited += 1000;
+      const pr = await fetch('https://ce.judge0.com/submissions/' + d.token + '?base64_encoded=true');
+      d = await pr.json();
+    }
+    const so = decB64(d.stdout), se = decB64(d.stderr), co = decB64(d.compile_output);
+    const sid = d.status ? d.status.id : 0;
+    const desc = (d.status && d.status.description) ? d.status.description : '';
+    if (sid === 6 || co){ setOut(co || 'Compilation error.', 'err'); status.textContent = 'compile error'; }
+    else if (sid === 5){ setOut((so ? so + '\n' : '') + 'Time limit exceeded — is a loop failing to end?', 'err'); status.textContent = 'timeout'; }
+    else if (sid >= 7 && sid <= 12){ setOut(se || ('Runtime error: ' + desc), 'err'); status.textContent = 'runtime error'; }
+    else if (so){ setOut(so, 'ok'); status.textContent = 'done' + (d.time ? ' · ' + d.time + 's' : ''); }
+    else { setOut('The program ran but printed nothing.', 'idle'); status.textContent = desc || 'no output'; }
   }catch(e){
-    out.textContent = 'Could not reach the Java sandbox (needs internet): ' + e;
+    setOut('Could not reach the Java sandbox — check your internet and press Run again.\n(' + (e && e.message ? e.message : e) + ')', 'err');
+    status.textContent = 'unreachable';
+  }finally{
+    clearInterval(tick); cdBusy = false;
+    runBtn.disabled = false; runBtn.textContent = '▶ Run';
   }
 }
-state.codeText = state.codeText || {};
-const cdHost = document.getElementById('cdHost');
-coding.forEach((c,idx)=>{
-  const d=document.createElement('div'); d.className='qcard'; d.style.marginBottom='14px';
-  d.innerHTML='<div class="qtop"><div><span class="chip">Problem '+(idx+1)+'</span></div>'+
-    '<div class="small faint" id="cdm'+idx+'">'+(state.coding[idx]?'✓ done':'')+'</div></div>'+
-    '<h3 style="margin:0 0 6px">'+c.t+'</h3><p class="muted small" style="margin:0 0 10px">'+c.p+'</p>'+
-    (c.ex?'<div class="small faint" style="margin-bottom:10px;white-space:pre-wrap">'+c.ex+'</div>':'')+
-    '<label class="small muted">Your code</label>'+
-    '<textarea id="code'+idx+'" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>'+
-    '<label class="small muted" style="display:block;margin-top:8px">Program input (stdin, if any)</label>'+
-    '<input id="in'+idx+'" class="stdin" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="nothing needed, or e.g.  10  /  3 9 2 12 5 0">'+
-    '<div class="row" style="margin-top:10px">'+
-      '<button class="btn sm primary" data-t="r'+idx+'">▶ Run</button>'+
-      '<button class="btn sm" data-t="s'+idx+'">Show solution</button>'+
-      '<button class="btn sm ok" data-t="m'+idx+'">Mark done</button></div>'+
-    '<pre id="out'+idx+'" style="display:none;margin-top:12px"></pre>'+
-    '<pre id="s'+idx+'" style="display:none;margin-top:12px"></pre>';
-  const ta=d.querySelector('#code'+idx);
-  ta.value = (state.codeText[idx]!==undefined) ? state.codeText[idx] : c.start;
-  ta.addEventListener('input',()=>{ state.codeText[idx]=ta.value; save(); });
-  d.querySelector('#in'+idx).value = c.in || '';
-  d.querySelector('[data-t="r'+idx+'"]').onclick=()=>runCode(idx);
-  d.querySelector('[data-t="s'+idx+'"]').onclick=()=>{ const p=d.querySelector('#s'+idx); p.textContent=c.s; p.style.display=(p.style.display==='none'?'block':'none'); };
-  d.querySelector('[data-t="m'+idx+'"]').onclick=()=>{ state.coding[idx]='done'; save(); document.getElementById('cdm'+idx).textContent='✓ done'; upd(); toast('Marked done'); };
-  cdHost.appendChild(d);
-});
-document.getElementById('cdCount').textContent = coding.length+' problems';
+renderRail();
+selectProblem(0);
+document.getElementById('cdCount').textContent = coding.length + ' problems';
 
 /* ---------------- PRACTICE TEST (free response) ---------------- */
 let exSet=[], exPos=0, exRes=[], exTime=15*60, exTick=null, exRunning=false, exGraded=false;
