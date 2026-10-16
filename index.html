@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BCA Study Tool</title>
+<title>BCACRAMS</title>
 <style>
 :root{
   --bg:#08080a; --surface:#121214; --surface-2:#17171a; --elev:#1c1c20;
@@ -258,8 +258,8 @@ pre.conout.idle{color:var(--faint)}
 
 /* ---------- mandarin numbers trainer (scoped under .mandarin) ---------- */
 .mandarin{max-width:780px}
-.mandarin .seg{display:flex;gap:4px;padding:4px;border:1px solid var(--line);background:var(--surface);border-radius:13px;margin-bottom:18px}
-.mandarin .seg button{flex:1;cursor:pointer;border:0;background:transparent;color:var(--muted);font:550 13px inherit;padding:9px 8px;border-radius:9px;transition:.15s;white-space:nowrap}
+.mandarin .seg{display:flex;flex-wrap:wrap;gap:5px;padding:4px;border:1px solid var(--line);background:var(--surface);border-radius:13px;margin-bottom:18px}
+.mandarin .seg button{flex:1 1 200px;cursor:pointer;border:0;background:transparent;color:var(--muted);font:550 13px inherit;padding:9px 8px;border-radius:9px;transition:.15s;white-space:nowrap}
 .mandarin .seg button:hover{color:var(--text);background:#17171a}
 .mandarin .seg button.active{background:#171a24;color:var(--text);box-shadow:0 0 0 1px var(--accent-line) inset}
 .mandarin .mstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
@@ -331,7 +331,7 @@ pre.conout.idle{color:var(--faint)}
   <aside class="side">
     <div class="brand">
       <div class="logo">BCA</div>
-      <div><h1>BCA Study Tool</h1><p>AP CSA · Mandarin 中文</p></div>
+      <div><h1>BCACRAMS</h1><p>AP CSA · Mandarin 中文</p></div>
     </div>
     <div class="navlabel">Study</div>
     <nav class="nav" id="nav">
@@ -513,6 +513,8 @@ pre.conout.idle{color:var(--faint)}
           <button data-m="e2p" class="active">English → Pīnyīn</button>
           <button data-m="p2e">Pīnyīn → English</button>
           <button data-m="h2p">汉字 → Pīnyīn</button>
+          <button data-m="e2h">English → 汉字</button>
+          <button data-m="h2e">汉字 → English</button>
           <button data-m="mix">Mixed</button>
         </div>
         <div class="mstats">
@@ -1121,7 +1123,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     {n:5,hz:'五',py:'wǔ'},{n:6,hz:'六',py:'liù'},{n:7,hz:'七',py:'qī'},{n:8,hz:'八',py:'bā'},
     {n:9,hz:'九',py:'jiǔ'},{n:10,hz:'十',py:'shí'}
   ];
-  const MODE_LABEL={e2p:'English → Pīnyīn',p2e:'Pīnyīn → English',h2p:'汉字 → Pīnyīn',mix:'Mixed'};
+  const MODE_LABEL={e2p:'English → Pīnyīn',p2e:'Pīnyīn → English',h2p:'汉字 → Pīnyīn',e2h:'English → 汉字',h2e:'汉字 → English',mix:'Mixed'};
   const LS='mandarin-numbers-1-10-v1';
   const state=Object.assign({mode:'e2p',streak:0,best:0,asked:0,right:0,autoSound:true},JSON.parse(localStorage.getItem(LS)||'{}'));
   const $=id=>document.getElementById(id);
@@ -1139,7 +1141,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     u.lang='zh-CN';u.rate=0.75;u.pitch=1;
     speechSynthesis.cancel();speechSynthesis.speak(u);
   }
-  function pickType(){ return state.mode==='mix'?rand(['e2p','p2e','h2p']):state.mode; }
+  function pickType(){ return state.mode==='mix'?rand(['e2p','p2e','h2p','e2h','h2e']):state.mode; }
   function distractors(c,count){ return shuffle(NUMBERS.filter(x=>x.n!==c.n)).slice(0,count); }
 
   function newQuestion(){
@@ -1148,7 +1150,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     current={type:type,target:target};
     const qm=$('m-qmode');
     qm.textContent=MODE_LABEL[type];
-    qm.className='chip'+(type==='p2e'?' jade':type==='h2p'?' alt':'');
+    qm.className='chip'+(type==='p2e'||type==='h2e'?' jade':type==='h2p'||type==='e2h'?' alt':'');
     $('m-qcount').textContent='Q'+qNo;
     const promptEl=$('m-prompt');
     promptEl.className='prompt';promptEl.innerHTML='';
@@ -1162,11 +1164,20 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
       promptEl.innerHTML=target.py;
       promptEl.appendChild(el('span','em','choose the number'));
       renderChoices(options,o=>({v:String(o.n),cls:'hz'}),target);
-    }else{
+    }else if(type==='h2p'){
       promptEl.className='prompt hanzi';
       promptEl.innerHTML=target.hz;
       promptEl.appendChild(el('span','em','choose the pīnyīn'));
       renderChoices(options,o=>({v:o.py,cls:'py'}),target);
+    }else if(type==='e2h'){
+      promptEl.innerHTML=target.n;
+      promptEl.appendChild(el('span','em','choose the 汉字'));
+      renderChoices(options,o=>({v:o.hz,cls:'hz'}),target);
+    }else{
+      promptEl.className='prompt hanzi';
+      promptEl.innerHTML=target.hz;
+      promptEl.appendChild(el('span','em','choose the English'));
+      renderChoices(options,o=>({v:String(o.n),cls:'hz'}),target);
     }
     $('m-speakPrompt').onclick=()=>speak(target.hz);
     $('m-fb').className='fb';
