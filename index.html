@@ -324,6 +324,67 @@ pre.conout.idle{color:var(--faint)}
 .mandarin kbd{font:600 11px ui-monospace,monospace;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:6px;padding:1px 6px;color:var(--muted)}
 @media(max-width:520px){.mandarin .choices{grid-template-columns:1fr}.mandarin .prompt{font-size:60px}.mandarin .prompt.hanzi{font-size:72px}.mandarin .reftable{grid-template-columns:1fr}}
 
+/* ---------- Mandarin radicals quiz 2 + trace game (scoped under .radicals) ---------- */
+.radicals{max-width:780px}
+.radicals .rstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.radicals .rstat{border:1px solid var(--line);background:var(--surface);border-radius:13px;padding:12px 14px}
+.radicals .rstat .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
+.radicals .rstat .n{font-size:24px;font-weight:660;letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums}
+.radicals .rcard{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.radicals .qtop{display:flex;align-items:center;gap:10px;margin-bottom:18px;justify-content:flex-start}
+.radicals .qtop .count{margin-left:auto;font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.radicals .chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:#b3bbff;border:1px solid var(--accent-line)}
+.radicals .chip.alt{background:var(--amber-soft);color:#e8c877;border-color:rgba(214,160,42,.3)}
+.radicals .rpromptbox{text-align:center;padding:8px 0 22px}
+.radicals .rprompt{font-size:104px;font-weight:650;line-height:1.05;color:#f2d9b8;
+  font-family:"PingFang SC","Hiragino Sans GB","Songti SC","Heiti SC","STHeiti",serif}
+.radicals .rhint{margin-top:4px;color:var(--faint);font-size:13px}
+.radicals .rchoices{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.radicals .rchoice{position:relative;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;
+  border:1px solid var(--line-2);background:#141418;color:var(--text);font:550 16px inherit;
+  padding:15px 16px;border-radius:12px;transition:background .12s,border-color .12s,transform .06s}
+.radicals .rchoice:hover:not(.locked){background:#1a1a20;border-color:#45454e}
+.radicals .rchoice:active:not(.locked){transform:translateY(1px)}
+.radicals .rchoice .k{width:24px;height:24px;flex:0 0 auto;border-radius:7px;display:grid;place-items:center;
+  font:600 12px ui-monospace,monospace;background:#1e1e24;border:1px solid var(--line-2);color:var(--faint)}
+.radicals .rchoice .v{flex:1}
+.radicals .rchoice .mark{font-size:16px;opacity:0}
+.radicals .rchoice.correct{border-color:rgba(63,185,80,.55);background:var(--green-soft)}
+.radicals .rchoice.correct .k{background:var(--green);border-color:transparent;color:#04210f}
+.radicals .rchoice.correct .mark{opacity:1;color:var(--green)}
+.radicals .rchoice.wrong{border-color:rgba(248,81,73,.6);background:var(--red-soft)}
+.radicals .rchoice.wrong .k{background:var(--red);border-color:transparent;color:#240a08}
+.radicals .rchoice.wrong .mark{opacity:1;color:var(--red)}
+.radicals .rchoice.locked{cursor:default}
+.radicals .rchoice.dim{opacity:.5}
+.radicals .rfb{margin-top:16px;border:1px solid var(--line);background:#101013;border-radius:12px;padding:14px 16px;display:none;align-items:center;gap:14px;font-size:13px}
+.radicals .rfb.show{display:flex}
+.radicals .rfb.good{border-color:rgba(63,185,80,.45);background:var(--green-soft)}
+.radicals .rfb.bad{border-color:rgba(248,81,73,.45);background:var(--red-soft)}
+.radicals .rfb .icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:0 0 auto;font-size:18px}
+.radicals .rfb.good .icon{background:var(--green);color:#04210f}
+.radicals .rfb.bad .icon{background:var(--red);color:#240a08}
+.radicals .rfb .txt{flex:1}
+.radicals .rfb .txt b{font-size:15px}
+.radicals .rfb .txt .reveal{font-size:13.5px;color:var(--muted);margin-top:3px}
+.radicals .rfb .reveal .big{font-size:18px;color:var(--text)}
+.radicals .rrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.radicals .rtrace{margin-top:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:16px;box-shadow:var(--shadow)}
+.radicals .rtrace-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.radicals .rtrace-head b{font-size:14.5px}
+.radicals .rtrace-wrap{position:relative;display:grid;place-items:center}
+.radicals #r-canvas{display:block;width:100%;max-width:340px;height:auto;aspect-ratio:1/1;border-radius:14px;
+  border:1px solid var(--line-2);background:#0e0e12;touch-action:none;cursor:crosshair}
+.radicals .rscore{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;
+  background:rgba(10,10,14,.86);border:1px solid var(--line-2);border-radius:14px;padding:16px 22px;text-align:center;
+  backdrop-filter:blur(6px)}
+.radicals .rscore[hidden]{display:none}
+.radicals .rscore .big{font-size:34px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.radicals .rscore .big span{font-size:15px;color:var(--faint);font-weight:500}
+.radicals .tip{font-size:12.5px;color:var(--faint);text-align:center;margin-top:18px;line-height:1.7}
+.radicals kbd{font:600 11px ui-monospace,monospace;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:6px;padding:1px 6px;color:var(--muted)}
+@media(max-width:520px){.radicals .rchoices{grid-template-columns:1fr}.radicals .rprompt{font-size:80px}.radicals .rstats{grid-template-columns:1fr 1fr 1fr;gap:8px}}
+
 </style>
 </head>
 <body>
@@ -343,6 +404,7 @@ pre.conout.idle{color:var(--faint)}
       <button data-t="exam"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></span>Practice Test</button>
       <div class="navlabel">Languages</div>
       <button data-t="mandarin"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h9"/><circle cx="19" cy="17" r="2"/></svg></span>Mandarin 中文</button>
+      <button data-t="radicals"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l3.5-.8 10-10-2.7-2.7-10 10L4 20z"/><path d="M14.8 6.5l2.7 2.7"/></svg></span>Radicals Quiz 2</button>
     </nav>
     <div class="sidefoot">
       <div class="t">Test in</div>
@@ -544,6 +606,54 @@ pre.conout.idle{color:var(--faint)}
         <div class="row" style="justify-content:center;margin-top:14px">
           <button class="btn ghost sm" id="m-reset">Reset streak</button>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ MANDARIN RADICALS QUIZ 2 ============ -->
+    <section class="section" id="s-radicals">
+      <div class="head">
+        <div><h2>Mandarin Radicals Quiz 2</h2><p>Random radicals (and their variant forms) — pick the meaning, then trace one.</p></div>
+        <span class="pill"><span class="dot"></span><span id="r-rounds">0 rounds</span></span>
+      </div>
+      <div class="radicals">
+        <div class="rstats">
+          <div class="rstat"><div class="l">Streak</div><div class="n" id="r-streak">0</div></div>
+          <div class="rstat"><div class="l">Accuracy</div><div class="n" id="r-acc">—</div></div>
+          <div class="rstat"><div class="l">Answered</div><div class="n" id="r-asked">0</div></div>
+        </div>
+
+        <div class="rcard">
+          <div class="qtop"><span class="chip" id="r-kind">Radical</span>
+            <span class="chip alt" id="r-best">best streak 0</span>
+            <span class="count" id="r-qcount">Q1</span></div>
+          <div class="rpromptbox"><div class="rprompt" id="r-prompt">女</div>
+            <div class="rhint" id="r-hint">choose the meaning</div></div>
+          <div class="rchoices" id="r-choices"></div>
+          <div class="rfb" id="r-fb"><div class="icon" id="r-fbIcon">✓</div>
+            <div class="txt"><b id="r-fbTitle">Correct</b><div class="reveal" id="r-fbReveal"></div></div></div>
+          <div class="rrow" id="r-afterRow" style="display:none;margin-top:18px">
+            <button class="btn primary" id="r-next">Next radical →</button>
+            <span class="small faint">press <kbd>Space</kbd> / <kbd>Enter</kbd></span>
+          </div>
+        </div>
+
+        <div class="rtrace">
+          <div class="rtrace-head">
+            <div><b>Trace it</b><div class="faint small">A random radical appears faintly — draw over it, then check.</div></div>
+            <button class="btn sm ghost" id="r-newTrace">New radical</button>
+          </div>
+          <div class="rtrace-wrap">
+            <canvas id="r-canvas" width="340" height="340" aria-label="Trace the radical"></canvas>
+            <div class="rscore" id="r-score" hidden></div>
+          </div>
+          <div class="rrow" style="margin-top:12px">
+            <button class="btn primary" id="r-check">Check drawing</button>
+            <button class="btn ghost" id="r-clear">Clear</button>
+            <span class="small faint" id="r-traceName">Trace: 女 · woman</span>
+          </div>
+        </div>
+
+        <p class="tip">Options shuffle every question. The tracing card picks a new radical each round — keyboard <kbd>1</kbd>–<kbd>4</kbd> answers, <kbd>Space</kbd> moves on.</p>
       </div>
     </section>
   </main>
@@ -1270,6 +1380,227 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
 
   buildRef();
   document.querySelectorAll('#m-mode button').forEach(b=>b.classList.toggle('active',b.dataset.m===state.mode));
+  updateStats();newQuestion();
+})();
+
+/* ---------------- MANDARIN RADICALS QUIZ 2 + TRACE (isolated) ---------------- */
+(function(){
+  const RADICALS=[
+    {hz:'女',meaning:'woman',form:'',py:'nǚ'},
+    {hz:'日',meaning:'sun',form:'',py:'rì'},
+    {hz:'辶',meaning:'walk / road',form:'',py:'chuò'},
+    {hz:'虫',meaning:'insect',form:'',py:'chóng'},
+    {hz:'⺮',meaning:'bamboo',form:'',py:'zhú'},
+    {hz:'王',meaning:'king',form:'',py:'wáng'},
+    {hz:'刀',meaning:'knife',form:'',py:'dāo'},
+    {hz:'⺈',meaning:'knife',form:'top form',py:'dāo'},
+    {hz:'刂',meaning:'knife',form:'right-side form',py:'dāo'},
+    {hz:'火',meaning:'fire',form:'',py:'huǒ'},
+    {hz:'灬',meaning:'fire',form:'bottom form',py:'huǒ'},
+    {hz:'马',meaning:'horse',form:'',py:'mǎ'},
+    {hz:'鸟',meaning:'bird',form:'',py:'niǎo'},
+    {hz:'讠',meaning:'speech',form:'',py:'yán'}
+  ];
+  const MEANINGS=[...new Set(RADICALS.map(r=>r.meaning))];
+  const RLS='mandarin-radicals-quiz2-v1';
+  const $=id=>document.getElementById(id);
+  const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+  const rand=a=>a[Math.floor(Math.random()*a.length)];
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  const rState=Object.assign({streak:0,best:0,asked:0,right:0},JSON.parse(localStorage.getItem(RLS)||'{}'));
+  const saveR=()=>localStorage.setItem(RLS,JSON.stringify({streak:rState.streak,best:rState.best,asked:rState.asked,right:rState.right}));
+  let current=null,answered=false,qNo=0,lastHz=null;
+
+  function updateStats(){
+    $('r-streak').textContent=rState.streak;
+    $('r-acc').textContent=rState.asked?Math.round(rState.right/rState.asked*100)+'%':'—';
+    $('r-asked').textContent=rState.asked;
+    $('r-best').textContent='best streak '+rState.best;
+    $('r-rounds').textContent=qNo+' rounds';
+  }
+
+  function newQuestion(){
+    answered=false;qNo++;
+    let r; do{ r=rand(RADICALS); } while(RADICALS.length>1 && r.hz===lastHz);
+    lastHz=r.hz; current=r;
+    $('r-prompt').textContent=r.hz;
+    $('r-qcount').textContent='Q'+qNo;
+    $('r-kind').textContent=r.form?'Variant form':'Radical';
+    $('r-kind').className='chip'+(r.form?' alt':'');
+    const wrong=shuffle(MEANINGS.filter(m=>m!==r.meaning)).slice(0,3);
+    const opts=shuffle([r.meaning,...wrong]);
+    const host=$('r-choices'); host.innerHTML='';
+    opts.forEach((m,i)=>{
+      const b=el('button','rchoice');
+      if(m===r.meaning)b.dataset.correct='1';
+      b.innerHTML='<span class="k">'+(i+1)+'</span><span class="v">'+m+'</span><span class="mark">✓</span>';
+      b.onclick=()=>answer(m,b);
+      host.appendChild(b);
+    });
+    $('r-fb').className='rfb';
+    $('r-afterRow').style.display='none';
+    updateStats();
+  }
+
+  function answer(m,btn){
+    if(answered)return;
+    answered=true;
+    const r=current, ok=m===r.meaning;
+    const choices=[...document.querySelectorAll('#r-choices .rchoice')];
+    choices.forEach(c=>{c.classList.add('locked','dim');c.querySelector('.mark').textContent='✗';});
+    btn.classList.remove('dim');
+    btn.querySelector('.mark').textContent=ok?'✓':'✗';
+    const cb=choices.find(c=>c.dataset.correct==='1');
+    if(cb){cb.classList.remove('dim');cb.classList.add('correct');cb.querySelector('.mark').textContent='✓';}
+    const fb=$('r-fb');
+    fb.className='rfb show '+(ok?'good':'bad');
+    $('r-fbIcon').textContent=ok?'✓':'✗';
+    $('r-fbTitle').textContent=ok?'Correct!':'Not quite';
+    $('r-fbReveal').innerHTML='<span class="big">'+r.hz+' · '+r.meaning+'</span>'+
+      (r.form?' · '+r.form:'')+' · <span style="color:#b9c2ff">'+r.py+'</span>'+
+      (ok?'':'  —  you picked <b>'+m+'</b>');
+    rState.asked++;
+    if(ok){rState.right++;rState.streak++;if(rState.streak>rState.best)rState.best=rState.streak;}
+    else rState.streak=0;
+    saveR();updateStats();
+    $('r-afterRow').style.display='flex';
+    $('r-next').focus();
+  }
+
+  $('r-next').onclick=()=>{ if(answered)newQuestion(); };
+
+  document.addEventListener('keydown',e=>{
+    if(curSec!=='radicals'||e.repeat)return;
+    if(answered&&(e.key===' '||e.key==='Enter')){e.preventDefault();newQuestion();return;}
+    if(!answered&&e.key>='1'&&e.key<='4'){
+      const b=document.querySelectorAll('#r-choices .rchoice')[Number(e.key)-1];
+      if(b)b.click();
+    }
+  });
+
+  /* ---- trace-the-radical mini-game ---- */
+  const SIZE=340;
+  const canvas=$('r-canvas'), ctx=canvas.getContext('2d');
+  const DPR=Math.min(2,window.devicePixelRatio||1);
+  canvas.width=SIZE*DPR; canvas.height=SIZE*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  const FONT='"PingFang SC","Hiragino Sans GB","Songti SC","Heiti SC","STHeiti",serif';
+  let traceTarget=RADICALS[0], strokes=[], drawn=[], isDown=false, lastPt=null, mask=[];
+
+  function drawGuide(){
+    ctx.clearRect(0,0,SIZE,SIZE);
+    ctx.save();
+    ctx.strokeStyle='rgba(255,255,255,.07)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(SIZE/2,0);ctx.lineTo(SIZE/2,SIZE);
+    ctx.moveTo(0,SIZE/2);ctx.lineTo(SIZE,SIZE/2);ctx.stroke();
+    ctx.setLineDash([5,7]);ctx.strokeStyle='rgba(255,255,255,.05)';
+    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(SIZE,SIZE);
+    ctx.moveTo(SIZE,0);ctx.lineTo(0,SIZE);ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha=.16;ctx.fillStyle='#fff';ctx.font='250px '+FONT;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(traceTarget.hz,SIZE/2,SIZE/2+6);
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle='#8f9bff';ctx.fillStyle='#8f9bff';
+    ctx.lineWidth=9;ctx.lineCap='round';ctx.lineJoin='round';
+    strokes.forEach(s=>{
+      if(s.length===1){ctx.beginPath();ctx.arc(s[0].x,s[0].y,4.5,0,Math.PI*2);ctx.fill();return;}
+      if(s.length<2)return;
+      ctx.beginPath();ctx.moveTo(s[0].x,s[0].y);
+      for(let i=1;i<s.length;i++)ctx.lineTo(s[i].x,s[i].y);
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  function buildMask(ch){
+    const c=document.createElement('canvas');c.width=SIZE;c.height=SIZE;
+    const x=c.getContext('2d');
+    x.fillStyle='#fff';x.font='250px '+FONT;x.textAlign='center';x.textBaseline='middle';
+    x.fillText(ch,SIZE/2,SIZE/2+6);
+    const d=x.getImageData(0,0,SIZE,SIZE).data, pts=[];
+    for(let y=0;y<SIZE;y+=3)for(let xx=0;xx<SIZE;xx+=3){
+      if(d[(y*SIZE+xx)*4+3]>70)pts.push([xx,y]);
+    }
+    return pts;
+  }
+
+  function toLogical(e){
+    const rect=canvas.getBoundingClientRect();
+    return {x:(e.clientX-rect.left)/rect.width*SIZE,y:(e.clientY-rect.top)/rect.height*SIZE};
+  }
+
+  canvas.addEventListener('pointerdown',e=>{
+    if(e.button!==undefined&&e.button!==0)return;
+    e.preventDefault();
+    try{canvas.setPointerCapture(e.pointerId);}catch(_){}
+    isDown=true;$('r-score').hidden=true;
+    const p=toLogical(e);
+    strokes.push([{x:p.x,y:p.y}]);drawn.push([p.x,p.y]);lastPt=p;
+    drawGuide();
+  });
+  canvas.addEventListener('pointermove',e=>{
+    if(!isDown)return;
+    e.preventDefault();
+    const p=toLogical(e);
+    if(lastPt){
+      const dx=p.x-lastPt.x,dy=p.y-lastPt.y,dist=Math.hypot(dx,dy);
+      const steps=Math.max(1,Math.floor(dist/3));
+      for(let i=1;i<=steps;i++){
+        const q={x:lastPt.x+dx*i/steps,y:lastPt.y+dy*i/steps};
+        strokes[strokes.length-1].push(q);drawn.push([q.x,q.y]);
+      }
+    }
+    lastPt=p;drawGuide();
+  });
+  function endStroke(e){
+    if(!isDown)return;
+    isDown=false;lastPt=null;
+    try{canvas.releasePointerCapture(e.pointerId);}catch(_){}
+  }
+  canvas.addEventListener('pointerup',endStroke);
+  canvas.addEventListener('pointercancel',endStroke);
+  canvas.addEventListener('pointerleave',e=>{ if(isDown)endStroke(e); });
+
+  function scoreDrawing(){
+    if(drawn.length<20){ toast('Draw over the faint character first'); return; }
+    const cell=16;
+    const key=(x,y)=>((x/cell)|0)+','+((y/cell)|0);
+    const charCells=new Set(mask.map(p=>key(p[0],p[1])));
+    const drawnCells=new Set(drawn.map(p=>key(p[0],p[1])));
+    const near=(set,x,y)=>{
+      const gx=(x/cell)|0,gy=(y/cell)|0;
+      for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)if(set.has((gx+dx)+','+(gy+dy)))return true;
+      return false;
+    };
+    let covered=0; for(const p of mask) if(near(drawnCells,p[0],p[1])) covered++;
+    let precise=0; for(const p of drawn) if(near(charCells,p[0],p[1])) precise++;
+    const recall=mask.length?covered/mask.length:0;
+    const precision=drawn.length?precise/drawn.length:0;
+    const score=Math.max(0,Math.min(100,Math.round(100*(0.72*recall+0.28*precision))));
+    const msg=score>=85?'Great tracing!':score>=65?'Nice — close.':'Keep going — trace the strokes.';
+    const box=$('r-score');box.hidden=false;
+    box.innerHTML='<div class="big">'+score+'<span>/100</span></div><div class="faint small">'+msg+'</div>';
+  }
+
+  function newTrace(){
+    let r; do{ r=rand(RADICALS); } while(RADICALS.length>1&&r.hz===traceTarget.hz);
+    traceTarget=r;strokes=[];drawn=[];
+    $('r-score').hidden=true;
+    mask=buildMask(r.hz);
+    $('r-traceName').textContent='Trace: '+r.hz+' · '+r.meaning+(r.form?' ('+r.form+')':'');
+    drawGuide();
+  }
+
+  $('r-check').onclick=scoreDrawing;
+  $('r-clear').onclick=()=>{strokes=[];drawn=[];$('r-score').hidden=true;drawGuide();};
+  $('r-newTrace').onclick=newTrace;
+
+  newTrace();
   updateStats();newQuestion();
 })();
 
