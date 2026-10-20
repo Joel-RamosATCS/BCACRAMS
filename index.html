@@ -332,6 +332,9 @@ pre.conout.idle{color:var(--faint)}
 .radicals .seg button.active{background:#171a24;color:var(--text);box-shadow:0 0 0 1px var(--accent-line) inset}
 .radicals.traceOnly #r-canvas{max-width:420px}
 .radicals.traceOnly .rtrace{padding:22px}
+.radicals .rcue{text-align:center;font-size:15px;color:var(--muted);margin:0 0 12px}
+.radicals .rcue b{color:var(--text);font-size:17px}
+.radicals .rcue[hidden]{display:none}
 .radicals .rstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
 .radicals .rstat{border:1px solid var(--line);background:var(--surface);border-radius:13px;padding:12px 14px}
 .radicals .rstat .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
@@ -618,13 +621,14 @@ pre.conout.idle{color:var(--faint)}
     <!-- ============ MANDARIN RADICALS QUIZ 2 ============ -->
     <section class="section" id="s-radicals">
       <div class="head">
-        <div><h2>Mandarin Radicals Quiz 2</h2><p>Random radicals (and their variant forms) — pick the meaning, then trace one.</p></div>
+        <div><h2>Mandarin Radicals Quiz 2</h2><p>Random radicals and variant forms — quiz the meaning, trace, or write blind.</p></div>
         <span class="pill"><span class="dot"></span><span id="r-rounds">0 rounds</span></span>
       </div>
       <div class="radicals">
         <div class="seg" id="r-mode">
           <button data-rm="both" class="active">Quiz + Trace</button>
           <button data-rm="trace">Trace only</button>
+          <button data-rm="blind">Blind write</button>
         </div>
 
         <div id="r-quizWrap">
@@ -655,6 +659,7 @@ pre.conout.idle{color:var(--faint)}
             <div><b>Trace it</b><div class="faint small" id="r-traceHint">Trace the same radical as the quiz question.</div></div>
             <button class="btn sm ghost" id="r-newTrace">New radical pair</button>
           </div>
+          <div class="rcue" id="r-cue" hidden></div>
           <div class="rtrace-wrap">
             <canvas id="r-canvas" width="340" height="340" aria-label="Trace the radical"></canvas>
             <div class="rscore" id="r-score" hidden></div>
@@ -666,7 +671,7 @@ pre.conout.idle{color:var(--faint)}
           </div>
         </div>
 
-        <p class="tip">Options shuffle every question. In <b>Quiz + Trace</b> the tracing card follows the question; <b>Trace only</b> is free random practice.</p>
+        <p class="tip">Options shuffle every question. <b>Quiz + Trace</b> follows the question, <b>Trace only</b> is free practice, and <b>Blind write</b> hides the character until you check.</p>
       </div>
     </section>
   </main>
@@ -1499,7 +1504,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
   canvas.width=SIZE*DPR; canvas.height=SIZE*DPR;
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const FONT='"PingFang SC","Hiragino Sans GB","Songti SC","Heiti SC","STHeiti",serif';
-  let traceTarget=RADICALS[0], strokes=[], drawn=[], isDown=false, lastPt=null, mask=[];
+  let traceTarget=RADICALS[0], strokes=[], drawn=[], isDown=false, lastPt=null, mask=[], revealed=false;
 
   function drawGuide(){
     ctx.clearRect(0,0,SIZE,SIZE);
@@ -1512,11 +1517,13 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     ctx.moveTo(SIZE,0);ctx.lineTo(0,SIZE);ctx.stroke();
     ctx.restore();
 
-    ctx.save();
-    ctx.globalAlpha=.16;ctx.fillStyle='#fff';ctx.font='250px '+FONT;
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(traceTarget.hz,SIZE/2,SIZE/2+6);
-    ctx.restore();
+    if(rState.mode!=='blind'){
+      ctx.save();
+      ctx.globalAlpha=.16;ctx.fillStyle='#fff';ctx.font='250px '+FONT;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(traceTarget.hz,SIZE/2,SIZE/2+6);
+      ctx.restore();
+    }
 
     ctx.save();
     ctx.strokeStyle='#8f9bff';ctx.fillStyle='#8f9bff';
@@ -1529,6 +1536,14 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
       ctx.stroke();
     });
     ctx.restore();
+
+    if(rState.mode==='blind'&&revealed){
+      ctx.save();
+      ctx.globalAlpha=.5;ctx.fillStyle='#7ee2a0';ctx.font='250px '+FONT;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(traceTarget.hz,SIZE/2,SIZE/2+6);
+      ctx.restore();
+    }
   }
 
   function buildMask(ch){
@@ -1581,7 +1596,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
   canvas.addEventListener('pointerleave',e=>{ if(isDown)endStroke(e); });
 
   function scoreDrawing(){
-    if(drawn.length<20){ toast('Draw over the faint character first'); return; }
+    if(drawn.length<20){ toast(rState.mode==='blind'?'Write the radical first':'Draw over the faint character first'); return; }
     const cell=16;
     const key=(x,y)=>((x/cell)|0)+','+((y/cell)|0);
     const charCells=new Set(mask.map(p=>key(p[0],p[1])));
@@ -1596,16 +1611,26 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     const recall=mask.length?covered/mask.length:0;
     const precision=drawn.length?precise/drawn.length:0;
     const score=Math.max(0,Math.min(100,Math.round(100*(0.72*recall+0.28*precision))));
-    const msg=score>=85?'Great tracing!':score>=65?'Nice — close.':'Keep going — trace the strokes.';
+    const msg=rState.mode==='blind'
+      ?(score>=85?'Great recall!':score>=65?'Close — compare the green strokes.':'Keep practicing — compare with the reveal.')
+      :(score>=85?'Great tracing!':score>=65?'Nice — close.':'Keep going — trace the strokes.');
     const box=$('r-score');box.hidden=false;
     box.innerHTML='<div class="big">'+score+'<span>/100</span></div><div class="faint small">'+msg+'</div>';
+    if(rState.mode==='blind'){ revealed=true; updateTraceLabel(); drawGuide(); }
+  }
+
+  function updateTraceLabel(){
+    const r=traceTarget;
+    if(rState.mode==='blind'&&!revealed){ $('r-traceName').textContent='Hidden until you check'; return; }
+    $('r-traceName').textContent=(rState.mode==='blind'?'Answer: ':'Trace: ')+r.hz+' · '+r.meaning+(r.form?' ('+r.form+')':'');
   }
 
   function setTraceTarget(r){
-    traceTarget=r;strokes=[];drawn=[];
+    traceTarget=r;strokes=[];drawn=[];revealed=false;
     $('r-score').hidden=true;
     mask=buildMask(r.hz);
-    $('r-traceName').textContent='Trace: '+r.hz+' · '+r.meaning+(r.form?' ('+r.form+')':'');
+    $('r-cue').innerHTML='Write the radical for <b>'+r.meaning+'</b>'+(r.form?' ('+r.form+')':'')+' · '+r.py;
+    updateTraceLabel();
     drawGuide();
   }
 
@@ -1618,26 +1643,32 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     const m=rState.mode;
     document.querySelectorAll('#r-mode button').forEach(b=>b.classList.toggle('active',b.dataset.rm===m));
     const wrap=document.querySelector('.radicals');
-    if(wrap)wrap.classList.toggle('traceOnly',m==='trace');
+    if(wrap)wrap.classList.toggle('traceOnly',m!=='both');
     $('r-quizWrap').style.display=m==='both'?'':'none';
-    $('r-traceHint').textContent=m==='both'?'Trace the same radical as the quiz question.':'Free practice — a new random radical each round.';
+    $('r-cue').hidden=m!=='blind';
+    $('r-traceHint').textContent=
+      m==='both'?'Trace the same radical as the quiz question.':
+      m==='trace'?'Free practice — a new random radical each round.':
+      'No guide — write it from memory, then check.';
     $('r-newTrace').textContent=m==='both'?'New radical pair':'New radical';
+    updateTraceLabel();
   }
 
   function setMode(m){
-    rState.mode=m;saveR();renderMode();
-    if(m==='trace')newTrace();
-    else if(current)setTraceTarget(current);
+    rState.mode=m;saveR();
+    if(m==='both'){ if(current)setTraceTarget(current); }
+    else { newTrace(); }
+    renderMode();
   }
 
   document.querySelectorAll('#r-mode button').forEach(b=>b.onclick=()=>setMode(b.dataset.rm));
 
   $('r-check').onclick=scoreDrawing;
-  $('r-clear').onclick=()=>{strokes=[];drawn=[];$('r-score').hidden=true;drawGuide();};
+  $('r-clear').onclick=()=>{strokes=[];drawn=[];revealed=false;$('r-score').hidden=true;updateTraceLabel();drawGuide();};
   $('r-newTrace').onclick=()=>{ if(rState.mode==='both')newQuestion(); else newTrace(); };
 
   updateStats();newQuestion();renderMode();
-  if(rState.mode==='trace')newTrace();
+  if(rState.mode!=='both')newTrace();
 })();
 
 </script>
