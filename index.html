@@ -326,6 +326,12 @@ pre.conout.idle{color:var(--faint)}
 
 /* ---------- Mandarin radicals quiz 2 + trace game (scoped under .radicals) ---------- */
 .radicals{max-width:780px}
+.radicals .seg{display:flex;flex-wrap:wrap;gap:5px;padding:4px;border:1px solid var(--line);background:var(--surface);border-radius:13px;margin-bottom:18px}
+.radicals .seg button{flex:1 1 160px;cursor:pointer;border:0;background:transparent;color:var(--muted);font:550 13px inherit;padding:9px 8px;border-radius:9px;transition:.15s;white-space:nowrap}
+.radicals .seg button:hover{color:var(--text);background:#17171a}
+.radicals .seg button.active{background:#171a24;color:var(--text);box-shadow:0 0 0 1px var(--accent-line) inset}
+.radicals.traceOnly #r-canvas{max-width:420px}
+.radicals.traceOnly .rtrace{padding:22px}
 .radicals .rstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
 .radicals .rstat{border:1px solid var(--line);background:var(--surface);border-radius:13px;padding:12px 14px}
 .radicals .rstat .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
@@ -616,31 +622,38 @@ pre.conout.idle{color:var(--faint)}
         <span class="pill"><span class="dot"></span><span id="r-rounds">0 rounds</span></span>
       </div>
       <div class="radicals">
-        <div class="rstats">
-          <div class="rstat"><div class="l">Streak</div><div class="n" id="r-streak">0</div></div>
-          <div class="rstat"><div class="l">Accuracy</div><div class="n" id="r-acc">—</div></div>
-          <div class="rstat"><div class="l">Answered</div><div class="n" id="r-asked">0</div></div>
+        <div class="seg" id="r-mode">
+          <button data-rm="both" class="active">Quiz + Trace</button>
+          <button data-rm="trace">Trace only</button>
         </div>
 
-        <div class="rcard">
-          <div class="qtop"><span class="chip" id="r-kind">Radical</span>
-            <span class="chip alt" id="r-best">best streak 0</span>
-            <span class="count" id="r-qcount">Q1</span></div>
-          <div class="rpromptbox"><div class="rprompt" id="r-prompt">女</div>
-            <div class="rhint" id="r-hint">choose the meaning</div></div>
-          <div class="rchoices" id="r-choices"></div>
-          <div class="rfb" id="r-fb"><div class="icon" id="r-fbIcon">✓</div>
-            <div class="txt"><b id="r-fbTitle">Correct</b><div class="reveal" id="r-fbReveal"></div></div></div>
-          <div class="rrow" id="r-afterRow" style="display:none;margin-top:18px">
-            <button class="btn primary" id="r-next">Next radical →</button>
-            <span class="small faint">press <kbd>Space</kbd> / <kbd>Enter</kbd></span>
+        <div id="r-quizWrap">
+          <div class="rstats">
+            <div class="rstat"><div class="l">Streak</div><div class="n" id="r-streak">0</div></div>
+            <div class="rstat"><div class="l">Accuracy</div><div class="n" id="r-acc">—</div></div>
+            <div class="rstat"><div class="l">Answered</div><div class="n" id="r-asked">0</div></div>
+          </div>
+
+          <div class="rcard">
+            <div class="qtop"><span class="chip" id="r-kind">Radical</span>
+              <span class="chip alt" id="r-best">best streak 0</span>
+              <span class="count" id="r-qcount">Q1</span></div>
+            <div class="rpromptbox"><div class="rprompt" id="r-prompt">女</div>
+              <div class="rhint" id="r-hint">choose the meaning</div></div>
+            <div class="rchoices" id="r-choices"></div>
+            <div class="rfb" id="r-fb"><div class="icon" id="r-fbIcon">✓</div>
+              <div class="txt"><b id="r-fbTitle">Correct</b><div class="reveal" id="r-fbReveal"></div></div></div>
+            <div class="rrow" id="r-afterRow" style="display:none;margin-top:18px">
+              <button class="btn primary" id="r-next">Next radical →</button>
+              <span class="small faint">press <kbd>Space</kbd> / <kbd>Enter</kbd></span>
+            </div>
           </div>
         </div>
 
         <div class="rtrace">
           <div class="rtrace-head">
-            <div><b>Trace it</b><div class="faint small">A random radical appears faintly — draw over it, then check.</div></div>
-            <button class="btn sm ghost" id="r-newTrace">New radical</button>
+            <div><b>Trace it</b><div class="faint small" id="r-traceHint">Trace the same radical as the quiz question.</div></div>
+            <button class="btn sm ghost" id="r-newTrace">New radical pair</button>
           </div>
           <div class="rtrace-wrap">
             <canvas id="r-canvas" width="340" height="340" aria-label="Trace the radical"></canvas>
@@ -653,7 +666,7 @@ pre.conout.idle{color:var(--faint)}
           </div>
         </div>
 
-        <p class="tip">Options shuffle every question. The tracing card picks a new radical each round — keyboard <kbd>1</kbd>–<kbd>4</kbd> answers, <kbd>Space</kbd> moves on.</p>
+        <p class="tip">Options shuffle every question. In <b>Quiz + Trace</b> the tracing card follows the question; <b>Trace only</b> is free random practice.</p>
       </div>
     </section>
   </main>
@@ -1407,8 +1420,8 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
   const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
   const rand=a=>a[Math.floor(Math.random()*a.length)];
   const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-  const rState=Object.assign({streak:0,best:0,asked:0,right:0},JSON.parse(localStorage.getItem(RLS)||'{}'));
-  const saveR=()=>localStorage.setItem(RLS,JSON.stringify({streak:rState.streak,best:rState.best,asked:rState.asked,right:rState.right}));
+  const rState=Object.assign({streak:0,best:0,asked:0,right:0,mode:'both'},JSON.parse(localStorage.getItem(RLS)||'{}'));
+  const saveR=()=>localStorage.setItem(RLS,JSON.stringify({streak:rState.streak,best:rState.best,asked:rState.asked,right:rState.right,mode:rState.mode}));
   let current=null,answered=false,qNo=0,lastHz=null;
 
   function updateStats(){
@@ -1440,6 +1453,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     $('r-fb').className='rfb';
     $('r-afterRow').style.display='none';
     updateStats();
+    setTraceTarget(r);
   }
 
   function answer(m,btn){
@@ -1470,7 +1484,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
   $('r-next').onclick=()=>{ if(answered)newQuestion(); };
 
   document.addEventListener('keydown',e=>{
-    if(curSec!=='radicals'||e.repeat)return;
+    if(curSec!=='radicals'||rState.mode!=='both'||e.repeat)return;
     if(answered&&(e.key===' '||e.key==='Enter')){e.preventDefault();newQuestion();return;}
     if(!answered&&e.key>='1'&&e.key<='4'){
       const b=document.querySelectorAll('#r-choices .rchoice')[Number(e.key)-1];
@@ -1587,8 +1601,7 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     box.innerHTML='<div class="big">'+score+'<span>/100</span></div><div class="faint small">'+msg+'</div>';
   }
 
-  function newTrace(){
-    let r; do{ r=rand(RADICALS); } while(RADICALS.length>1&&r.hz===traceTarget.hz);
+  function setTraceTarget(r){
     traceTarget=r;strokes=[];drawn=[];
     $('r-score').hidden=true;
     mask=buildMask(r.hz);
@@ -1596,12 +1609,35 @@ fcOrder=sh(fcOrder); upd(); fcRender(); trRender();
     drawGuide();
   }
 
+  function newTrace(){
+    let r; do{ r=rand(RADICALS); } while(RADICALS.length>1&&r.hz===traceTarget.hz);
+    setTraceTarget(r);
+  }
+
+  function renderMode(){
+    const m=rState.mode;
+    document.querySelectorAll('#r-mode button').forEach(b=>b.classList.toggle('active',b.dataset.rm===m));
+    const wrap=document.querySelector('.radicals');
+    if(wrap)wrap.classList.toggle('traceOnly',m==='trace');
+    $('r-quizWrap').style.display=m==='both'?'':'none';
+    $('r-traceHint').textContent=m==='both'?'Trace the same radical as the quiz question.':'Free practice — a new random radical each round.';
+    $('r-newTrace').textContent=m==='both'?'New radical pair':'New radical';
+  }
+
+  function setMode(m){
+    rState.mode=m;saveR();renderMode();
+    if(m==='trace')newTrace();
+    else if(current)setTraceTarget(current);
+  }
+
+  document.querySelectorAll('#r-mode button').forEach(b=>b.onclick=()=>setMode(b.dataset.rm));
+
   $('r-check').onclick=scoreDrawing;
   $('r-clear').onclick=()=>{strokes=[];drawn=[];$('r-score').hidden=true;drawGuide();};
-  $('r-newTrace').onclick=newTrace;
+  $('r-newTrace').onclick=()=>{ if(rState.mode==='both')newQuestion(); else newTrace(); };
 
-  newTrace();
-  updateStats();newQuestion();
+  updateStats();newQuestion();renderMode();
+  if(rState.mode==='trace')newTrace();
 })();
 
 </script>
